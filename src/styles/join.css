@@ -1,0 +1,802 @@
+/* ========================================================
+   MUSHROOMHUB — JOIN & SIGNUP PAGE STYLES
+   PALETTE: DEEP REGAL EMERALD, CHAMPAGNE GOLD & SAGE CANVAS
+   ======================================================== */
+
+.join-page-wrapper {
+  background: linear-gradient(180deg, #f7faf6 0%, #edf4ec 50%, #f6f9f5 100%);
+  min-height: calc(100vh - 120px);
+  padding: clamp(32px, 4vw, 56px) 0 clamp(48px, 6vw, 80px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle organic background ambient glows */
+.join-page-wrapper::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  right: -100px;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 241, 223, 0.22) 0%, rgba(167, 241, 223, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.join-page-wrapper::after {
+  content: "";
+  position: absolute;
+  bottom: -150px;
+  left: -120px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(52, 93, 49, 0.12) 0%, rgba(52, 93, 49, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.join-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 36px);
+  position: relative;
+  z-index: 1;
+}
+
+.join-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.22fr;
+  gap: clamp(28px, 3.5vw, 52px);
+  align-items: start;
+}
+
+/* ========================================================
+   LEFT SIDE: SHOWCASE & ECOSYSTEM VALUE
+   ======================================================== */
+.join-showcase {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.join-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #97CD97;
+  border-radius: 30px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #345D31;
+  box-shadow: 0 2px 10px rgba(52, 93, 49, 0.06);
+  width: fit-content;
+}
+
+.join-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #A7F1DF;
+  box-shadow: 0 0 8px #A7F1DF;
+}
+
+.join-hero-title {
+  font-family: var(--serif, 'Inter', sans-serif);
+  font-size: clamp(32px, 3.2vw, 44px);
+  font-weight: 800;
+  color: #181818;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.join-hero-title em {
+  font-style: italic;
+  color: #345D31;
+  background: linear-gradient(135deg, #345D31 0%, #9CAC55 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.join-hero-subtitle {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4f6454;
+  margin: 0;
+}
+
+/* Dynamic Role Preview Card */
+.join-preview-card {
+  background: #ffffff;
+  border: 1.5px solid #d5e5d3;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 16px 42px rgba(12, 36, 23, 0.08);
+  transition: all 0.3s ease;
+}
+
+.join-preview-image-wrap {
+  position: relative;
+  height: 190px;
+  width: 100%;
+  overflow: hidden;
+  background: #e8efe7;
+}
+
+.join-preview-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.join-preview-card:hover .join-preview-image-wrap img {
+  transform: scale(1.03);
+}
+
+.join-preview-overlay-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(12, 36, 23, 0.88);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.join-preview-overlay-badge {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: #ffffff;
+  color: #345D31;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border: 1px solid #97CD97;
+}
+
+.join-preview-body {
+  padding: 20px 22px;
+}
+
+.join-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.join-preview-role-name {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f3420;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.join-preview-desc {
+  font-size: 13px;
+  color: #556b5b;
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+/* Feature bullet points */
+.join-perks-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.join-perks-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12.5px;
+  color: #263e2d;
+  line-height: 1.45;
+}
+
+.join-perks-list .check-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #eef7ee;
+  color: #345D31;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Trust Card */
+.join-trust-box {
+  background: #ffffff;
+  border: 1px solid #dce8db;
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 4px 16px rgba(12, 36, 23, 0.04);
+}
+
+.join-trust-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.join-trust-stat strong {
+  font-size: 18px;
+  font-weight: 800;
+  color: #345D31;
+  line-height: 1.2;
+}
+
+.join-trust-stat span {
+  font-size: 11px;
+  color: #647a69;
+  font-weight: 600;
+}
+
+.join-trust-divider {
+  width: 1px;
+  height: 32px;
+  background: #e2ede0;
+}
+
+/* ========================================================
+   RIGHT SIDE: REGISTRATION FORM CARD
+   ======================================================== */
+.join-card {
+  background: #ffffff;
+  border: 1.5px solid #d7e5d5;
+  border-radius: 22px;
+  box-shadow: 0 20px 60px rgba(12, 36, 23, 0.08);
+  padding: clamp(24px, 3.2vw, 42px);
+  position: relative;
+}
+
+.join-card-header {
+  margin-bottom: 22px;
+}
+
+.join-card-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9CAC55;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.join-card-title {
+  font-family: var(--serif, 'Inter', sans-serif);
+  font-size: clamp(24px, 2.5vw, 30px);
+  font-weight: 800;
+  color: #181818;
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.join-card-subtitle {
+  font-size: 13px;
+  color: #5c7261;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Google Realtime Button */
+.join-google-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border: 1.5px solid #d2ded0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #213828;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  margin-top: 18px;
+}
+
+.join-google-btn:hover {
+  background: #f7faf6;
+  border-color: #225c34;
+  box-shadow: 0 4px 16px rgba(34, 92, 52, 0.12);
+  transform: translateY(-1px);
+}
+
+.join-google-btn:active {
+  transform: translateY(0);
+}
+
+.join-badge-instant {
+  background: #eef7ee;
+  color: #345D31;
+  border: 1px solid #c9dec6;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+/* Separator */
+.join-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 22px 0 18px;
+  color: #8fa191;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.join-divider::before,
+.join-divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e0eae0;
+}
+
+.join-divider span {
+  padding: 0 14px;
+}
+
+/* ========================================================
+   ROLE SELECTOR CARDS (STEP 1)
+   ======================================================== */
+.join-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.join-step-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: #345D31;
+  background: #edf7ed;
+  border: 1px solid #c8dec5;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.join-step-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a3922;
+  margin: 0;
+}
+
+.join-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.join-role-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1.5px solid #d5e5d3;
+  background: #ffffff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.join-role-card:hover {
+  border-color: #345D31;
+  background: #fbfdfa;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(52, 93, 49, 0.08);
+}
+
+.join-role-card.active {
+  border: 2px solid #345D31;
+  background: linear-gradient(135deg, #f0f7ef 0%, #e6f3e4 100%);
+  box-shadow: 0 6px 20px rgba(52, 93, 49, 0.12);
+}
+
+.join-role-icon {
+  font-size: 26px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.join-role-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.join-role-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.join-role-name {
+  font-size: 14px;
+  font-weight: 800;
+  color: #181818;
+}
+
+.join-role-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: #EFF9F2;
+  color: #345D31;
+}
+
+.join-role-tagline {
+  font-size: 11px;
+  color: #5c7463;
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+.join-role-check {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid #c2d8bf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: transparent;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  background: #ffffff;
+}
+
+.join-role-card.active .join-role-check {
+  border-color: #345D31;
+  background: #345D31;
+  color: #ffffff;
+}
+
+/* ========================================================
+   FORM FIELDS (STEP 2)
+   ======================================================== */
+.join-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.join-field-full {
+  grid-column: 1 / -1;
+}
+
+.join-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.join-field-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #173721;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.join-field-label span.req {
+  color: #c93b2b;
+}
+
+.join-field-label span.opt {
+  font-size: 11px;
+  color: #798f7e;
+  font-weight: 500;
+}
+
+.join-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.join-input-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 15px;
+  color: #6a826f;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.join-input {
+  width: 100%;
+  padding: 11px 14px 11px 40px;
+  border: 1.5px solid #d2ded0;
+  border-radius: 10px;
+  font-size: 13.5px;
+  color: #181818;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.join-input:focus {
+  outline: none;
+  border-color: #345D31;
+  box-shadow: 0 0 0 3.5px rgba(52, 93, 49, 0.12);
+  background: #ffffff;
+}
+
+.join-input::placeholder {
+  color: #9cb19f;
+  font-size: 13px;
+}
+
+/* Password Toggle */
+.join-pwd-toggle-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #6a826f;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.join-pwd-toggle-btn:hover {
+  background: #edf5ec;
+  color: #345D31;
+}
+
+/* Password Strength Bar */
+.join-pwd-meter {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.join-pwd-bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  height: 4px;
+}
+
+.join-pwd-bar-segment {
+  height: 100%;
+  border-radius: 3px;
+  background: #e2ede0;
+  transition: background 0.25s ease;
+}
+
+.join-pwd-bar-segment.weak { background: #e04f44; }
+.join-pwd-bar-segment.fair { background: #e6a23c; }
+.join-pwd-bar-segment.good { background: #9CAC55; }
+.join-pwd-bar-segment.strong { background: #345D31; }
+
+.join-pwd-meter-text {
+  font-size: 11px;
+  color: #6a826f;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Checkbox terms */
+.join-terms-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 16px 0 20px;
+  font-size: 12.5px;
+  color: #4b6250;
+  line-height: 1.45;
+}
+
+.join-terms-row input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #345D31;
+  cursor: pointer;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Submit Button */
+.join-submit-btn {
+  width: 100%;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #345D31 0%, #203c1f 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(52, 93, 49, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(167, 241, 223, 0.4);
+}
+
+.join-submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #3d6e3a 0%, #1c381a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(52, 93, 49, 0.35);
+  border-color: rgba(167, 241, 223, 0.7);
+}
+
+.join-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Footer note & login redirect */
+.join-card-footer {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #e5eee3;
+  text-align: center;
+  font-size: 13px;
+  color: #556c5a;
+}
+
+.join-card-footer a {
+  color: #345D31;
+  font-weight: 800;
+  text-decoration: underline;
+  margin-left: 4px;
+}
+
+.join-card-footer a:hover {
+  color: #181818;
+}
+
+/* Security Guarantee Pills */
+.join-guarantees-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 11px;
+  color: #728776;
+  flex-wrap: wrap;
+}
+
+.join-guarantee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Error Banner */
+.join-alert-error {
+  background: #fdf2f0;
+  border: 1.5px solid #f3c2ba;
+  color: #a82d22;
+  padding: 11px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeIn 0.25s ease;
+}
+
+/* Success Banner */
+.join-alert-success {
+  background: #eef7ee;
+  border: 1.5px solid #c4dec2;
+  color: #1b532c;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================
+   RESPONSIVE QUERIES
+   ======================================================== */
+@media (max-width: 1024px) {
+  .join-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .join-showcase {
+    position: static;
+  }
+
+  .join-roles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .join-roles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .join-fields-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .join-trust-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .join-trust-divider {
+    display: none;
+  }
+}

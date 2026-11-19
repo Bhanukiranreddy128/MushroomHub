@@ -1,0 +1,723 @@
+/* ========================================================
+   ATTRACTIVE MODERN MAIN SITE HEADER WITH ANIMATED GREEN LINE
+   ======================================================== */
+
+/* Super Admin Version Announcement Ribbon */
+.superadmin-top-ribbon {
+  background: linear-gradient(90deg, #203c1f 0%, #345D31 50%, #264623 100%);
+  color: #ffffff;
+  padding: 8px 0;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  z-index: 1001;
+  animation: fadeInDown 0.3s ease;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ribbon-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #A7F1DF;
+  box-shadow: 0 0 10px #A7F1DF;
+  display: inline-block;
+  animation: pulseDot 1.4s infinite;
+}
+
+.ribbon-version-pill {
+  background: rgba(255, 255, 255, 0.22);
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.ribbon-close-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0.8;
+  padding: 2px 6px;
+}
+
+.ribbon-close-btn:hover {
+  opacity: 1;
+}
+
+/* Header Container */
+.main-site-header {
+  position: sticky;
+  top: 0;
+  height: 76px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(49, 95, 58, 0.12);
+  box-shadow: 0 4px 25px rgba(18, 40, 22, 0.05);
+  z-index: 999;
+  transition: all 0.25s ease;
+}
+
+.modern-nav-wrap {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Modern Brand Logo same like footer */
+.modern-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.modern-brand:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.brand-logo-icon {
+  font-size: 34px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(203, 161, 77, 0.35));
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.modern-brand:hover .brand-logo-icon {
+  transform: rotate(-10deg) scale(1.15);
+}
+
+.brand-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #142319;
+  line-height: 1.05;
+}
+
+.brand-accent {
+  color: #9CAC55;
+  font-weight: 900;
+  transition: color 0.2s ease;
+}
+
+.modern-brand:hover .brand-accent {
+  color: #345D31;
+}
+
+.brand-badge-version {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #5d6f61;
+  letter-spacing: 0.8px;
+  margin-top: 3px;
+}
+
+/* Central Navigation Menu */
+.modern-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+}
+
+/* Animated Nav Item with Green Line Moving on Cursor Hover */
+.animated-nav-item {
+  position: relative;
+  padding: 8px 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #4b5a4d;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 6px;
+  transition: color 0.25s ease, background 0.25s ease;
+}
+
+/* The Animated Green Underline */
+.animated-nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 10px;
+  right: 10px;
+  height: 3px;
+  background: linear-gradient(90deg, #345D31, #A7F1DF, #9CAC55);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(167, 241, 223, 0.6);
+}
+
+/* Hover effect: Animated line expands smoothly when cursor moves over */
+.animated-nav-item:hover {
+  color: #345D31;
+  background: rgba(167, 241, 223, 0.14);
+}
+
+.animated-nav-item:hover::after {
+  transform: scaleX(1);
+  animation: navLineGlow 1.8s infinite linear;
+}
+
+/* Active Nav Item */
+.animated-nav-item.active {
+  color: #345D31;
+  font-weight: 700;
+  background: rgba(52, 93, 49, 0.08);
+}
+
+.animated-nav-item.active::after {
+  transform: scaleX(1);
+  height: 3px;
+  background: linear-gradient(90deg, #345D31, #A7F1DF, #97CD97);
+}
+
+@keyframes navLineGlow {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.nav-cultivator-link {
+  color: #26552e !important;
+  font-weight: 700;
+}
+
+.nav-customer-link {
+  color: #1c4a79 !important;
+  font-weight: 700;
+}
+
+.nav-trainee-link {
+  color: #83580b !important;
+  font-weight: 700;
+}
+
+/* Role Portals Mega-Menu in Central Nav */
+.nav-roles-mega-wrap {
+  position: relative;
+}
+
+.nav-roles-mega-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f2f7f0;
+  border: 1px solid #cce0c9;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-weight: 700;
+  color: #1e3d24;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-roles-mega-btn:hover,
+.nav-roles-mega-btn.active {
+  background: #e4efe1;
+  border-color: #2b6838;
+}
+
+.nav-dropdown-badge {
+  background: #276233;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+}
+
+.nav-dropdown-caret {
+  font-size: 10px;
+  color: #556c55;
+  transition: transform 0.25s ease;
+}
+
+/* Desktop Mega Dropdown Panel with Images and Brief Descriptions */
+.nav-roles-mega-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 860px;
+  max-width: 92vw;
+  background: #ffffff;
+  border: 1px solid #d4e2d0;
+  border-radius: 16px;
+  box-shadow: 0 24px 55px rgba(20, 45, 25, 0.16);
+  padding: 20px 22px 22px;
+  z-index: 1050;
+  animation: fadeInDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mega-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eef4ec;
+  margin-bottom: 16px;
+}
+
+.mega-panel-title {
+  font: 700 15px Manrope, sans-serif;
+  color: #183e22;
+  margin: 0 0 2px;
+}
+
+.mega-panel-subtitle {
+  font-size: 12px;
+  color: #637562;
+  margin: 0;
+}
+
+.mega-panel-viewall {
+  font-size: 11px;
+  font-weight: 700;
+  color: #265d31;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #f0f7ee;
+  border: 1px solid #d1e2ce;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.mega-panel-viewall:hover {
+  background: #e2f0de;
+  border-color: #2b6838;
+}
+
+/* 3-Column Role Cards Grid */
+.mega-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.mega-role-card {
+  background: #fbfdfa;
+  border: 1px solid #dce6d8;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 14px rgba(25, 45, 28, 0.04);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.mega-role-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(25, 45, 28, 0.1);
+  border-color: #3b7c46;
+}
+
+.mega-role-img-wrap {
+  height: 120px;
+  position: relative;
+  overflow: hidden;
+  background: #e6ede3;
+}
+
+.mega-role-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.mega-role-card:hover .mega-role-img {
+  transform: scale(1.06);
+}
+
+.mega-role-badge-pill {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mega-role-content {
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.mega-role-header {
+  margin-bottom: 6px;
+}
+
+.mega-role-name {
+  font: 700 15px Manrope, sans-serif;
+  color: #1a3c22;
+  margin: 0 0 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mega-role-tagline {
+  font-size: 11px;
+  font-weight: 700;
+  color: #366d40;
+  display: block;
+}
+
+.mega-role-desc {
+  font-size: 12px;
+  color: #586957;
+  line-height: 1.45;
+  margin: 0 0 10px;
+  flex: 1;
+}
+
+.mega-role-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+  font-size: 11px;
+  color: #27562e;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-weight: 600;
+}
+
+.mega-role-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+/* Mobile Drawer Roles Section */
+.mobile-drawer-roles-section {
+  display: none;
+}
+
+/* Right-Hand Navigation Actions */
+.modern-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Role Switcher Pill */
+.role-switcher-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #d4ded0;
+  background: #f3f8f1;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f4528;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.role-switcher-pill-btn:hover {
+  background: #e8f3e5;
+  border-color: #2b6838;
+}
+
+.role-pill-caret {
+  font-size: 9px;
+  color: #6a7c6a;
+}
+
+/* Role Dropdown Popover */
+.role-dropdown-popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  background: #ffffff;
+  border: 1px solid #dce5d8;
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(15, 30, 20, 0.15);
+  width: 250px;
+  z-index: 300;
+  padding: 8px 0;
+  animation: fadeInDown 0.2s ease;
+}
+
+.role-dropdown-title {
+  padding: 6px 14px 8px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #778977;
+  border-bottom: 1px solid #edf2e8;
+  letter-spacing: 0.6px;
+}
+
+.role-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 14px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.role-dropdown-option:hover {
+  background: #f4f8f2;
+}
+
+.role-dropdown-option.selected {
+  background: #ecf5ea;
+  color: #1c4826;
+  font-weight: 700;
+}
+
+.role-dropdown-footer {
+  border-top: 1px solid #edf2e8;
+  padding: 8px 14px 4px;
+  margin-top: 4px;
+}
+
+.role-dropdown-footer a {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2b6838;
+  text-decoration: none;
+}
+
+/* Cart Button */
+.modern-cart-btn {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #1f3d26;
+  background: #f4f7f2;
+  border: 1px solid #d9e2d6;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.modern-cart-btn:hover {
+  background: #e8f2e5;
+  border-color: #2b6838;
+  transform: translateY(-1px);
+}
+
+.modern-cart-counter {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #345D31;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(52, 93, 49, 0.4);
+}
+
+/* User Profile Pill */
+.user-profile-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 4px;
+  border-radius: 20px;
+  background: #f1f7ed;
+  border: 1px solid #d5e4d1;
+  text-decoration: none;
+  color: #1f4327;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.user-profile-pill:hover {
+  background: #e2f0dc;
+  border-color: #345D31;
+}
+
+.user-profile-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #345D31;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Nav Action Login & Join Buttons (Only Login & Join in Nav Bar) */
+.nav-login-btn {
+  padding: 7px 18px;
+  border-radius: 8px;
+  font: 700 13px Manrope, sans-serif;
+  color: #345D31;
+  text-decoration: none;
+  background: #f1f7ef;
+  border: 1.5px solid #345D31;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-login-btn:hover {
+  background: #345D31;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 93, 49, 0.2);
+}
+
+.nav-join-btn {
+  padding: 7px 20px;
+  border-radius: 8px;
+  font: 700 13px Manrope, sans-serif;
+  color: #ffffff !important;
+  text-decoration: none;
+  background: linear-gradient(135deg, #345D31 0%, #223f20 100%);
+  border: 1.5px solid #223f20;
+  box-shadow: 0 4px 12px rgba(52, 93, 49, 0.28);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-join-btn:hover {
+  background: linear-gradient(135deg, #3d6e3a 0%, #1c381a 100%);
+  box-shadow: 0 6px 18px rgba(52, 93, 49, 0.38);
+  transform: translateY(-1px);
+}
+
+.mobile-drawer-auth-actions {
+  display: none;
+}
+
+/* Mobile Toggle & Drawer */
+.modern-menu-toggle {
+  display: none;
+  background: #edf5ea;
+  border: 1px solid #c9ddc6;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 16px;
+  color: #1f4528;
+  cursor: pointer;
+}
+
+.mobile-drawer-footer {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .nav-login-btn,
+  .nav-join-btn {
+    display: none;
+  }
+
+  .mobile-drawer-auth-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #e1eadc;
+  }
+
+  .modern-menu-toggle {
+    display: block;
+  }
+
+  .modern-nav-menu {
+    display: none;
+    position: absolute;
+    top: 76px;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border-bottom: 1px solid #dce5d8;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 18px 24px 24px;
+    gap: 4px;
+  }
+
+  .modern-nav-menu.open {
+    display: flex;
+  }
+
+  .animated-nav-item {
+    padding: 12px 14px;
+    border-bottom: 1px solid #f1f4ed;
+  }
+
+  .animated-nav-item::after {
+    display: none;
+  }
+
+  .mobile-drawer-footer {
+    display: block;
+    margin-top: 14px;
+  }
+}

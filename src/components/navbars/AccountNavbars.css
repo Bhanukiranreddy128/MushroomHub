@@ -1,0 +1,1204 @@
+/* ========================================================
+   INDIVIDUAL ACCOUNT NAVBARS (Cultivator, Customer, Trainee, Trainer, Admin, Super Admin)
+   ======================================================== */
+
+/* Account Navbar Base */
+.account-navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 72px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 999;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+}
+
+.account-navbar-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Brand & Badge in Account Navbars */
+.account-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.account-brand-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.account-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.account-brand-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 19px;
+  font-weight: 900;
+  letter-spacing: -0.4px;
+  line-height: 1.15;
+}
+
+.account-brand-subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1px;
+}
+
+.account-badge-pill {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Navigation Tabs inside Account Navbars */
+.account-nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.account-nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.account-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font: 700 12px Manrope, sans-serif;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.18s ease;
+}
+
+.account-tab-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+
+/* Right-Hand Actions */
+.account-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.account-user-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 5px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.account-user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-signout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font: 700 12px Manrope, sans-serif;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+/* --------------------------------------------------------
+   1. CULTIVATOR NAVBAR THEME (Transparent Crystal Frosted Glass & Emerald Gold)
+   -------------------------------------------------------- */
+.navbar-cultivator {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1.5px solid rgba(52, 93, 49, 0.15);
+  box-shadow: 0 4px 24px rgba(52, 93, 49, 0.05);
+  color: #181818;
+}
+
+.navbar-cultivator .account-brand-title {
+  color: #181818;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: -0.5px;
+}
+
+.navbar-cultivator .account-brand-subtitle {
+  color: #345D31;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+.navbar-cultivator .account-badge-pill {
+  background: #EFF9F2;
+  color: #345D31;
+  border: 1px solid #97CD97;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.navbar-cultivator .account-tab-btn {
+  color: #2e4433;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 7px 13px;
+  transition: all 0.2s ease;
+}
+
+.navbar-cultivator .account-tab-btn:hover {
+  background: rgba(52, 93, 49, 0.07);
+  color: #181818;
+  transform: translateY(-1px);
+}
+
+.navbar-cultivator .account-tab-btn.active {
+  background: linear-gradient(135deg, #345D31 0%, #203c1f 100%);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(52, 93, 49, 0.25);
+  border-color: transparent;
+}
+
+.navbar-cultivator .account-user-badge {
+  background: #f6faf6;
+  color: #181818;
+  border: 1.5px solid rgba(52, 93, 49, 0.18);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  padding: 4px 12px 4px 6px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-cultivator .account-user-avatar {
+  background: linear-gradient(135deg, #345D31 0%, #203c1f 100%);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+}
+
+.navbar-cultivator .account-signout-btn {
+  color: #b83333;
+  background: rgba(200, 50, 50, 0.08);
+  border: 1px solid rgba(200, 50, 50, 0.25);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.navbar-cultivator .account-signout-btn:hover {
+  background: #b83333;
+  color: #ffffff;
+  border-color: #b83333;
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------
+   SHARED ATTRACTIVE THEME FOR ALL ACCOUNT NAVBARS
+   (Transparent Crystal Frosted Glass & Emerald Gold Palette)
+   -------------------------------------------------------- */
+.navbar-customer,
+.navbar-trainee,
+.navbar-trainer,
+.navbar-admin,
+.navbar-superadmin {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1.5px solid rgba(52, 93, 49, 0.15);
+  box-shadow: 0 4px 24px rgba(52, 93, 49, 0.05);
+  color: #181818;
+}
+
+.navbar-customer .account-brand-title,
+.navbar-trainee .account-brand-title,
+.navbar-trainer .account-brand-title,
+.navbar-admin .account-brand-title,
+.navbar-superadmin .account-brand-title {
+  color: #181818;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 19px;
+  letter-spacing: -0.5px;
+}
+
+.navbar-customer .account-brand-subtitle,
+.navbar-trainee .account-brand-subtitle,
+.navbar-trainer .account-brand-subtitle,
+.navbar-admin .account-brand-subtitle,
+.navbar-superadmin .account-brand-subtitle {
+  color: #345D31;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+}
+
+.navbar-customer .account-badge-pill,
+.navbar-trainee .account-badge-pill,
+.navbar-trainer .account-badge-pill,
+.navbar-admin .account-badge-pill,
+.navbar-superadmin .account-badge-pill {
+  background: #EFF9F2;
+  color: #345D31;
+  border: 1px solid #97CD97;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.navbar-customer .account-tab-btn,
+.navbar-trainee .account-tab-btn,
+.navbar-trainer .account-tab-btn,
+.navbar-admin .account-tab-btn,
+.navbar-superadmin .account-tab-btn {
+  color: #2e4433;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12.5px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 7px 13px;
+  transition: all 0.2s ease;
+}
+
+.navbar-customer .account-tab-btn:hover,
+.navbar-trainee .account-tab-btn:hover,
+.navbar-trainer .account-tab-btn:hover,
+.navbar-admin .account-tab-btn:hover,
+.navbar-superadmin .account-tab-btn:hover {
+  background: rgba(52, 93, 49, 0.07);
+  color: #181818;
+  transform: translateY(-1px);
+}
+
+.navbar-customer .account-tab-btn.active,
+.navbar-trainee .account-tab-btn.active,
+.navbar-trainer .account-tab-btn.active,
+.navbar-admin .account-tab-btn.active,
+.navbar-superadmin .account-tab-btn.active {
+  background: linear-gradient(135deg, #345D31 0%, #203c1f 100%);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(52, 93, 49, 0.25);
+  border-color: transparent;
+}
+
+.navbar-customer .account-user-badge,
+.navbar-trainee .account-user-badge,
+.navbar-trainer .account-user-badge,
+.navbar-admin .account-user-badge,
+.navbar-superadmin .account-user-badge {
+  background: #f6faf6;
+  color: #181818;
+  border: 1.5px solid rgba(52, 93, 49, 0.18);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  padding: 4px 12px 4px 6px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-customer .account-user-avatar,
+.navbar-trainee .account-user-avatar,
+.navbar-trainer .account-user-avatar,
+.navbar-admin .account-user-avatar,
+.navbar-superadmin .account-user-avatar {
+  background: linear-gradient(135deg, #345D31 0%, #203c1f 100%);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+}
+
+.navbar-customer .account-signout-btn,
+.navbar-trainee .account-signout-btn,
+.navbar-trainer .account-signout-btn,
+.navbar-admin .account-signout-btn,
+.navbar-superadmin .account-signout-btn {
+  color: #b83333;
+  background: rgba(200, 50, 50, 0.08);
+  border: 1px solid rgba(200, 50, 50, 0.25);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.navbar-customer .account-signout-btn:hover,
+.navbar-trainee .account-signout-btn:hover,
+.navbar-trainer .account-signout-btn:hover,
+.navbar-admin .account-signout-btn:hover,
+.navbar-superadmin .account-signout-btn:hover {
+  background: #b83333;
+  color: #ffffff;
+  border-color: #b83333;
+  transform: translateY(-1px);
+}
+
+/* Mobile Responsiveness for Account Navbars */
+@media (max-width: 900px) {
+  .account-navbar {
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .account-navbar-inner {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .account-nav-tabs {
+    order: 3;
+    width: 100%;
+    padding-bottom: 4px;
+    justify-content: flex-start;
+  }
+}
+
+/* ========================================================
+   ATTRACTIVE, CLEAN & CLEAR REAL-TIME NOTIFICATIONS DROPDOWN
+   ======================================================== */
+.notif-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 420px;
+  max-width: min(420px, calc(100vw - 28px));
+  background: #ffffff;
+  border: 1.5px solid rgba(52, 93, 49, 0.22);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(52, 93, 49, 0.22), 0 4px 16px rgba(0, 0, 0, 0.08);
+  z-index: 1100;
+  overflow: hidden;
+  animation: notifSlideDown 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Inter', sans-serif;
+  color: #181818;
+  text-align: left;
+}
+
+@keyframes notifSlideDown {
+  from { opacity: 0; transform: translateY(-10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.notif-dropdown-header {
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #203c1f 0%, #345D31 100%);
+  color: #ffffff;
+  border-bottom: 1.5px solid rgba(167, 241, 223, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notif-header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.notif-header-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.notif-live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.16);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #A7F1DF;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.notif-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #A7F1DF;
+  box-shadow: 0 0 8px #A7F1DF;
+  animation: pulseDot 1.4s infinite;
+}
+
+.notif-clear-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.notif-clear-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #A7F1DF;
+}
+
+.notif-dropdown-body {
+  max-height: 390px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c8e0cc transparent;
+}
+
+.notif-dropdown-body::-webkit-scrollbar {
+  width: 6px;
+}
+.notif-dropdown-body::-webkit-scrollbar-thumb {
+  background: #c8e0cc;
+  border-radius: 4px;
+}
+
+.notif-card-item {
+  padding: 14px 18px;
+  border-bottom: 1px solid #edf3eb;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  position: relative;
+  background: #ffffff;
+}
+
+.notif-card-item:hover {
+  background: #f4faf4;
+}
+
+.notif-card-item.unread {
+  background: #f6faf5;
+  border-left: 4px solid #345D31;
+}
+
+.notif-card-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  background: #eef6ee;
+  border: 1px solid #d4e8d6;
+}
+
+.notif-card-icon-wrap.order {
+  background: #eaf3fc;
+  border-color: #c9e0f7;
+}
+
+.notif-card-icon-wrap.delivery {
+  background: #ebf8ee;
+  border-color: #c2e8c8;
+}
+
+.notif-card-icon-wrap.feed {
+  background: #fbf6ea;
+  border-color: #eeddb2;
+}
+
+.notif-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.notif-card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #181818;
+  margin: 0;
+  line-height: 1.35;
+}
+
+.notif-card-unread-badge {
+  background: #345D31;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.notif-card-message {
+  font-size: 12px;
+  color: #3b503f;
+  line-height: 1.45;
+  margin: 0 0 6px 0;
+}
+
+.notif-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.notif-card-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5d7561;
+}
+
+.notif-card-action-hint {
+  font-size: 11px;
+  font-weight: 700;
+  color: #345D31;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.notif-dropdown-footer {
+  padding: 12px 18px;
+  background: #fafdfa;
+  border-top: 1px solid #e7eee2;
+}
+
+/* ========================================================
+   MODERN AIRY ENTERPRISE NAVBAR SYSTEM (Tailwind Matching)
+   ======================================================== */
+
+.top-utility-bar {
+  width: 100%;
+  background: #142319;
+  color: rgba(209, 250, 229, 0.85);
+  font-size: 11px;
+  padding: 6px 16px;
+  border-bottom: 1px solid rgba(6, 78, 59, 0.4);
+  letter-spacing: 0.02em;
+  user-select: none;
+  z-index: 1000;
+  position: relative;
+}
+
+.top-utility-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.top-utility-left,
+.top-utility-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.live-exchange-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #34d399;
+  font-weight: 600;
+}
+
+.live-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+  animation: pulseDotLive 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseDotLive {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.8;
+    box-shadow: 0 0 0 4px rgba(52, 211, 153, 0);
+  }
+}
+
+.utility-sep {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.dispatch-text {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.utility-link {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.utility-link:hover {
+  color: #ffffff;
+}
+
+.elevation-text {
+  color: #fcd34d;
+  font-weight: 600;
+}
+
+.site-header-modern {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(247, 247, 242, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid #E2E2D6;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px -2px rgba(27, 59, 43, 0.05);
+}
+
+.site-header-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* All Account Profiles Navbars: Edge-to-Edge full width, logo and MushroomHub placed firmly at Left Side */
+.account-header-inner,
+.customer-header-inner {
+  max-width: 100% !important;
+  padding: 0 clamp(16px, 2.5vw, 40px) !important;
+}
+
+.account-utility-inner,
+.customer-utility-inner {
+  max-width: 100% !important;
+  padding: 0 clamp(16px, 2.5vw, 40px) !important;
+}
+
+.account-brand-zone,
+.customer-brand-zone {
+  min-width: auto !important;
+}
+
+/* Brand Left Zone & Footer-Style Brand Typography */
+.brand-left-zone {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: 270px;
+}
+
+.brand-footer-style-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.brand-footer-style-wrap:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.brand-footer-logo-icon {
+  font-size: 34px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 8px rgba(203, 161, 77, 0.35));
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.brand-footer-style-wrap:hover .brand-footer-logo-icon {
+  transform: rotate(-10deg) scale(1.15);
+}
+
+.brand-footer-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-footer-title {
+  font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #142319;
+  line-height: 1.05;
+  display: flex;
+  align-items: baseline;
+}
+
+.brand-footer-gold {
+  color: #9CAC55;
+  font-weight: 900;
+  transition: color 0.2s ease;
+}
+
+.brand-footer-style-wrap:hover .brand-footer-gold {
+  color: #345D31;
+}
+
+.brand-footer-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.brand-footer-portal-name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #5d6f61;
+}
+
+@media (max-width: 1024px) {
+  .brand-left-zone {
+    min-width: auto;
+  }
+  .brand-footer-title {
+    font-size: 22px;
+  }
+  .brand-footer-logo-icon {
+    font-size: 28px;
+  }
+}
+
+.brand-modern-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand-modern-logo {
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 6px rgba(156, 172, 85, 0.3));
+  transition: transform 0.25s ease;
+}
+
+.brand-modern-wrap:hover .brand-modern-logo {
+  transform: rotate(-8deg) scale(1.12);
+}
+
+.brand-modern-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-modern-title {
+  font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #142319;
+  line-height: 1.05;
+}
+
+.brand-green {
+  color: #9CAC55;
+  font-weight: 900;
+}
+
+.brand-modern-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.brand-portal-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #737373;
+}
+
+.buyer-view-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: rgba(209, 250, 229, 0.95);
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  text-transform: uppercase;
+}
+
+.center-pill-nav {
+  display: flex;
+  align-items: center;
+  background: rgba(236, 236, 226, 0.7);
+  padding: 5px 6px;
+  border-radius: 9999px;
+  border: 1px solid rgba(222, 222, 207, 0.85);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.pill-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pill-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #525252;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.pill-item:hover {
+  color: #142319;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.pill-item.active {
+  background: #1B3B2B !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(27, 59, 43, 0.22);
+  font-weight: 700;
+}
+
+.live-dot-wrap {
+  position: relative;
+  display: flex;
+  width: 8px;
+  height: 8px;
+}
+
+.live-dot-ping {
+  position: absolute;
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #fb7185;
+  opacity: 0.75;
+  animation: pingDot 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.live-dot-core {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f43f5e;
+}
+
+@keyframes pingDot {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.basket-amber-badge {
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  border: 1px solid #fde68a;
+  line-height: 1.2;
+}
+
+.right-user-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.quick-cart-btn {
+  position: relative;
+  padding: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid #DCDCCF;
+  color: #404040;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.quick-cart-btn:hover {
+  background: #ffffff;
+  border-color: #BFBFA8;
+  color: #142319;
+}
+
+.quick-cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #1B3B2B;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+}
+
+.user-identity-wrap {
+  position: relative;
+}
+
+.user-identity-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 5px 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #DCDCCF;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.user-identity-pill:hover {
+  border-color: rgba(5, 150, 105, 0.4);
+  background: #ffffff;
+}
+
+.user-avatar-wrap {
+  position: relative;
+}
+
+.user-avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #fbbf24 100%);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  overflow: hidden;
+}
+
+.user-avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2px solid #ffffff;
+}
+
+.user-identity-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.user-identity-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #142319;
+  line-height: 1.15;
+}
+
+.user-identity-tier {
+  font-size: 10px;
+  font-weight: 500;
+  color: #a3a3a3;
+}
+
+.chevron-icon {
+  color: #a3a3a3;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.user-identity-pill:hover .chevron-icon {
+  color: #404040;
+}
+
+.signout-rose-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: rgba(255, 241, 242, 0.85);
+  border: 1px solid rgba(254, 205, 211, 0.85);
+  color: #be123c;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.signout-rose-btn:hover {
+  background: #ffe4e6;
+  color: #9f1239;
+}
+
+@media (max-width: 1240px) {
+  .center-pill-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header-inner {
+    height: 68px;
+    padding: 0 16px;
+  }
+  .dispatch-text, .utility-sep, .elevation-text {
+    display: none;
+  }
+  .signout-rose-btn span {
+    display: none;
+  }
+  .user-identity-text {
+    display: none;
+  }
+}
