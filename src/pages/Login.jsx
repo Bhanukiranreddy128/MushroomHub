@@ -12,7 +12,14 @@ export default function Login() {
   const { loginWithCredentials, user } = useAuth();
 
   const getDestination = (defaultPath) => {
-    if (redirectParam && redirectParam.startsWith("/") && redirectParam !== "/" && redirectParam !== "/login") {
+    if (
+      redirectParam &&
+      redirectParam.startsWith("/") &&
+      redirectParam !== "/" &&
+      !redirectParam.startsWith("/login") &&
+      !redirectParam.startsWith("/signup") &&
+      !redirectParam.startsWith("/join")
+    ) {
       return redirectParam;
     }
     return defaultPath;
@@ -31,11 +38,10 @@ export default function Login() {
   const [step, setStep] = useState(urlRole ? "login" : "select");
 
   const getInitialEmail = (role) => {
-    if (role === "cultivater" || role === "customer") return "";
-    const registered = getRegisteredUsers().find((u) => u.role === role);
-    if (registered) return registered.email;
-    const roleObj = SYSTEM_ROLES.find((r) => r.id === role);
-    return roleObj ? roleObj.defaultEmail : "";
+    const norm = (role || "").toLowerCase().trim();
+    if (norm === "admin") return "admin@mushroomhub.com";
+    if (norm === "superadmin") return "superadmin@mushroomhub.com";
+    return "";
   };
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -135,8 +141,9 @@ export default function Login() {
       const res = await loginWithCredentials(selectedRole, loginEmail, loginPassword);
       if (res.success) {
         setSuccessMessage("✅ Credentials verified in Cloud Database! Redirecting...");
+        const targetPortal = res.portalPath || getRolePortalPath(res.user) || "/portal/cultivator";
         setTimeout(() => {
-          navigate(getDestination(res.portalPath), { replace: true });
+          navigate(getDestination(targetPortal), { replace: true });
         }, 350);
       } else {
         setErrorMessage(res.error || "Login failed. Please verify credentials or create an account.");

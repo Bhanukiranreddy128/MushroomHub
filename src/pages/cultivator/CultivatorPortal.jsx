@@ -641,7 +641,7 @@ export default function CultivatorPortal() {
           )}
           {activeTab === "knowledge" && <MushroomKnowledge />}
           {activeTab === "bank" && <BankDetails onToast={showToast} />}
-          {activeTab === "profile" && <CultivatorProfile onToast={showToast} />}
+          {activeTab === "profile" && <CultivatorProfile user={user} onToast={showToast} />}
         </div>
       </main>
 

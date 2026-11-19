@@ -130,7 +130,14 @@ export default function SignUp() {
   const availableRoles = SYSTEM_ROLES.filter((r) => r.id !== "admin" && r.id !== "superadmin");
 
   const getDestination = (portalPath) => {
-    if (redirectParam && redirectParam.startsWith("/")) {
+    if (
+      redirectParam &&
+      redirectParam.startsWith("/") &&
+      redirectParam !== "/" &&
+      !redirectParam.startsWith("/login") &&
+      !redirectParam.startsWith("/signup") &&
+      !redirectParam.startsWith("/join")
+    ) {
       return redirectParam;
     }
     return portalPath;

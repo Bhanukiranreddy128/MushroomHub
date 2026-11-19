@@ -24,7 +24,7 @@ export default function CultivatorNavbar() {
   const [activeTab, setActiveTab] = useState("orders");
   const [orders, setOrders] = useState(getCustomerOrders);
   const [bargains, setBargains] = useState(() => getBargainOffersForCultivator(user));
-  const [profile, setProfile] = useState(getCultivatorProfile);
+  const [profile, setProfile] = useState(() => getCultivatorProfile(user));
 
   // Listen for tab changes from portal and updates to orders
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function CultivatorNavbar() {
     };
     const handleOrders = () => setOrders(getCustomerOrders());
     const handleBargains = () => setBargains(getBargainOffersForCultivator(user));
-    const handleProfile = () => setProfile(getCultivatorProfile());
+    const handleProfile = () => setProfile(getCultivatorProfile(user));
 
     window.addEventListener("cultivator-active-tab-updated", handleActiveTab);
     window.addEventListener("cultivator-orders-updated", handleOrders);
@@ -65,7 +65,7 @@ export default function CultivatorNavbar() {
   const pendingOrders = orders.filter((o) => o.deliveryStatus !== "Delivered").length;
   const pendingBargains = bargains.filter((b) => b.status === "pending" || b.status === "customer_countered").length;
 
-  const cultivatorName = profile.growerName || user?.name || "Bhanukiran";
+  const cultivatorName = profile.growerName || user?.name || "Cultivator";
   const userInitials = cultivatorName
     .split(" ")
     .map((w) => w[0])

@@ -63,7 +63,7 @@ export default function CustomerNavbar() {
 
   const userInitials = user?.name
     ? user.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
-    : "BK";
+    : (user?.email ? user.email.slice(0, 2).toUpperCase() : "CU");
 
   return (
     <>
@@ -197,7 +197,7 @@ export default function CustomerNavbar() {
                   <span className="online-indicator"></span>
                 </div>
                 <div className="user-identity-text">
-                  <span className="user-identity-name">{user?.name || "Bhanukiran"}</span>
+                  <span className="user-identity-name">{user?.name || "Customer"}</span>
                   <span className="user-identity-tier">Master Chef Tier</span>
                 </div>
                 <svg className="chevron-icon" width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,7 +223,7 @@ export default function CustomerNavbar() {
                 >
                   <div style={{ padding: "16px 18px", background: "#f8fbf7", borderBottom: "1px solid #e7eee2" }}>
                     <div style={{ fontSize: 13, fontWeight: 800, color: "#142319" }}>
-                      {user?.name || "Bhanukiran"}
+                      {user?.name || "Customer"}
                     </div>
                     <div style={{ fontSize: 11, color: "#6e7f6e", marginTop: 2 }}>
                       {user?.email || ""}

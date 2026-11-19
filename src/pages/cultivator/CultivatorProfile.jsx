@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import { getCultivatorProfile, saveCultivatorProfile } from "../../data/store";
 
-export default function CultivatorProfile({ onToast }) {
-  const [profile, setProfile] = useState(getCultivatorProfile);
+export default function CultivatorProfile({ onToast, user: propUser }) {
+  const { user: authUser } = useAuth();
+  const user = propUser || authUser;
+  const [profile, setProfile] = useState(() => getCultivatorProfile(user));
   const [isEditing, setIsEditing] = useState(false);
 
   const [formData, setFormData] = useState({ ...profile });
 
+  useEffect(() => {
+    const updated = getCultivatorProfile(user);
+    setProfile(updated);
+    setFormData({ ...updated });
+  }, [user]);
+
   const handleSave = (e) => {
     e.preventDefault();
-    saveCultivatorProfile(formData);
+    saveCultivatorProfile(formData, user);
     setProfile(formData);
     setIsEditing(false);
     onToast("🌱 Cultivator Profile updated! Farm attribution refreshed across all listings.");
@@ -85,7 +94,7 @@ export default function CultivatorProfile({ onToast }) {
 
               <div className="bank-field-box">
                 <span>Official Contact Email</span>
-                <strong>{profile.email}</strong>
+                <strong>{profile.email || user?.email || ""}</strong>
               </div>
 
               <div className="bank-field-box">

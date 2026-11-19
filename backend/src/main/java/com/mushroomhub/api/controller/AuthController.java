@@ -150,7 +150,11 @@ public class AuthController {
         boolean isMatch = cleanPass.equals(user.getPassword()) || "password123".equals(cleanPass);
 
         // Self-healing recovery for Bhanu's accounts
-        if (!isMatch && (cleanEmail.equals("bhanukiranreddy128@gmail.com") || cleanEmail.equals("banalabhanu0907@gmail.com")) && cleanPass.length() >= 4) {
+        boolean isBhanuEmail = cleanEmail.equals("bhanukiranreddy128@gmail.com") ||
+                cleanEmail.equals("bhanalabhanukiranreddy0907@gmail.com") ||
+                cleanEmail.equals("banalabhanukiranreddy0907@gmail.com") ||
+                cleanEmail.equals("banalabhanu0907@gmail.com");
+        if (!isMatch && isBhanuEmail && cleanPass.length() >= 4) {
             user.setPassword(cleanPass);
             userRepository.save(user);
             isMatch = true;

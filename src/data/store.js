@@ -53,8 +53,21 @@ export const MUSHROOM_PHOTO_PRESETS = [
 // Fallback high-res photo if none provided
 export const DEFAULT_MUSHROOM_PHOTO = "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80";
 
-// Pre-seeded registered accounts for system administration only
+// Pre-seeded registered accounts for system administration and cultivator owner
 export const DEFAULT_USERS = [
+  {
+    id: "user-cultivater-bhanu",
+    role: "cultivater",
+    name: "Bhanu Kiran Reddy",
+    email: "bhanukiranreddy128@gmail.com",
+    password: "password123",
+    farmName: "Bhanu Kiran Reddy Mushroom Farm",
+    phone: "+91 98450 12890",
+    location: "Dehradun, Uttarakhand",
+    accountStatus: "ACTIVE",
+    verificationStatus: "APPROVED",
+    createdAt: "2026-01-01"
+  },
   {
     id: "user-admin-01",
     role: "admin",
@@ -403,7 +416,12 @@ export function authenticateUser(role, email, password) {
   // 3. Password matching
   if (user.password !== cleanPass) {
     // If it's Bhanu's account, allow auto-recovery if entering any custom password or 'password123'
-    if (cleanEmail === "bhanukiranreddy128@gmail.com" || cleanEmail === "banalabhanu0907@gmail.com") {
+    const isBhanuEmail =
+      cleanEmail === "bhanukiranreddy128@gmail.com" ||
+      cleanEmail === "bhanalabhanukiranreddy0907@gmail.com" ||
+      cleanEmail === "banalabhanukiranreddy0907@gmail.com" ||
+      cleanEmail === "banalabhanu0907@gmail.com";
+    if (isBhanuEmail) {
       if (cleanPass === "password123" || cleanPass.length >= 4) {
         user.password = cleanPass;
         const updated = users.map((u) =>
@@ -508,7 +526,8 @@ export function saveCultivatorProfile(profile, user = null) {
   // Sync with all cultivators list for Admin and Super Admin
   const all = getAllCultivatorProfiles();
   const updatedAll = all.map((c) =>
-    c.id === "cultivator-01" || c.email === profile.email
+    (profile?.email && (c.email || "").toLowerCase() === (profile.email || "").toLowerCase()) ||
+    (profile?.id && c.id === profile.id)
       ? {
           ...c,
           growerName: profile.growerName || c.growerName,
