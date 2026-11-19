@@ -376,13 +376,8 @@ export default function CultivatorBargains({ onToast }) {
 
                 {/* Main Offer Details Grid */}
                 <div
+                  className="cultivator-bargain-offer-row"
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "auto 1fr 1fr 1fr",
-                    gap: 16,
-                    background: "#f7f9f6",
-                    borderRadius: 12,
-                    padding: "16px 20px",
                     alignItems: "center",
                     marginBottom: 16
                   }}
@@ -518,7 +513,7 @@ export default function CultivatorBargains({ onToast }) {
                       </strong>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "180px 1fr", gap: 14, marginBottom: 14 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 180px), 1fr))", gap: 14, marginBottom: 14 }}>
                       <div>
                         <label
                           htmlFor={`counter-price-${offer.id}`}

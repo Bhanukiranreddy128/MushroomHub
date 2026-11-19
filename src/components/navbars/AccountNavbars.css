@@ -1189,8 +1189,30 @@
 
 @media (max-width: 768px) {
   .site-header-inner {
-    height: 68px;
-    padding: 0 16px;
+    height: 64px;
+    padding: 0 12px;
+  }
+  .brand-left-zone {
+    min-width: 0 !important;
+    max-width: calc(100% - 90px);
+    flex: 1 1 auto;
+  }
+  .brand-footer-title {
+    font-size: 20px !important;
+  }
+  .brand-footer-logo-icon {
+    font-size: 26px !important;
+  }
+  .brand-footer-sub {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .brand-footer-portal-name {
+    display: none;
+  }
+  .buyer-view-pill {
+    font-size: 9px !important;
+    padding: 1px 6px !important;
   }
   .dispatch-text, .utility-sep, .elevation-text {
     display: none;
@@ -1198,7 +1220,41 @@
   .signout-rose-btn span {
     display: none;
   }
+  .signout-rose-btn {
+    padding: 8px 10px !important;
+  }
   .user-identity-text {
     display: none;
+  }
+  .right-user-controls {
+    gap: 6px !important;
+  }
+  .user-identity-pill {
+    padding: 4px 6px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header-inner {
+    padding: 0 8px;
+    height: 58px;
+  }
+  .brand-footer-title {
+    font-size: 17px !important;
+  }
+  .brand-footer-logo-icon {
+    font-size: 22px !important;
+  }
+  .brand-footer-style-wrap {
+    gap: 8px !important;
+  }
+  .buyer-view-pill {
+    display: none;
+  }
+  .chevron-icon {
+    display: none;
+  }
+  .signout-rose-btn {
+    padding: 7px !important;
   }
 }

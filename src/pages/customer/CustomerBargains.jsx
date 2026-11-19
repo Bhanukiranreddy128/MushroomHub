@@ -629,7 +629,7 @@ export default function CustomerBargains({ onToast, onBrowseFeed }) {
                         : `Grower countered at ₹${offer.counterPrice}/${offer.productUnit}. Propose your 2nd round counter-price to meet in the middle and finalize:`}
                     </p>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "190px 1fr", gap: 12, marginBottom: 12 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 190px), 1fr))", gap: 12, marginBottom: 12 }}>
                       <div>
                         <label
                           htmlFor={`cust-counter-price-${offer.id}`}

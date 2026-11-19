@@ -1,11 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import MorningFlushSlider from "../components/MorningFlushSlider";
 import ProductCard from "../components/ProductCard";
 import { DEFAULT_MUSHROOM_PHOTO, getMushroomFeed } from "../data/store";
 import { getMarketplaceProducts } from "../services/cultivatorProductService";
 
 export default function Home() {
+  const { user } = useAuth();
+
+  // If currently authenticated as a cultivator, redirect to dedicated cultivator portal
+  if (user?.isLoggedIn && (user.role === "cultivater" || user.role === "cultivator")) {
+    return <Navigate to="/portal/cultivator" replace />;
+  }
+
   const [liveMushrooms, setLiveMushrooms] = useState(() => {
     const feed = getMushroomFeed();
     return Array.isArray(feed) ? feed : [];

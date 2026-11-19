@@ -495,7 +495,7 @@ function BargainModalDialog({ product, onClose, onSuccess }) {
               )}
 
               {/* Quantity Stepper & Desired Price Row */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 18 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 160px), 1fr))", gap: 16, marginBottom: 18 }}>
                 {/* Desired Quantity */}
                 <div>
                   <label
@@ -751,7 +751,7 @@ function BargainModalDialog({ product, onClose, onSuccess }) {
                 <div style={{ fontSize: 12, fontWeight: 700, color: "#234928", marginBottom: 8 }}>
                   Your Contact &amp; Delivery Location
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 130px), 1fr))", gap: 10 }}>
                   <div>
                     <label htmlFor="bargain-contact-name" style={{ display: "block", fontSize: 11, color: "#546855", marginBottom: 3 }}>
                       Your Name

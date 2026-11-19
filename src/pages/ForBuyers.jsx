@@ -31,7 +31,7 @@ export default function ForBuyers() {
       </section>
 
       <div className="container" style={{ padding: "60px 0 80px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24, marginBottom: 50 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: 24, marginBottom: 50 }}>
           <article className="pillar-card" style={{ background: "#ffffff", border: "1px solid var(--line)", color: "var(--ink)", boxShadow: "var(--shadow-sm)" }}>
             <div className="pillar-icon-box" style={{ background: "var(--green-light)", border: "1px solid var(--line)" }}>🧺</div>
             <h3 style={{ color: "var(--ink)" }}>Small-Batch Living Flushes</h3>

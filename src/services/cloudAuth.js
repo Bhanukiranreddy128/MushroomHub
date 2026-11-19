@@ -228,8 +228,10 @@ export const updateAdminUserStatus = (id, status) => adminApiCall(`/users/${id}/
 
 // Farmer Verification
 export const fetchAdminFarmers = (params = "") => adminApiCall(`/farmers${params ? `?${params}` : ""}`);
-export const verifyAdminFarmer = (id, status, rejectionReason = "") =>
-  adminApiCall(`/farmers/${id}/verify`, "POST", { status, rejectionReason });
+export const verifyAdminFarmer = (id, status, rejectionReason = "", email = "") => {
+  const endpoint = id && !isNaN(id) && Number(id) > 0 ? `/farmers/${id}/verify` : `/farmers/verify`;
+  return adminApiCall(endpoint, "POST", { id, status, rejectionReason, email });
+};
 
 // Product Moderation
 export const fetchAdminProducts = (params = "") => adminApiCall(`/products${params ? `?${params}` : ""}`);

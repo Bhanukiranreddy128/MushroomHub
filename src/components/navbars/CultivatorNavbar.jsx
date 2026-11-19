@@ -50,7 +50,11 @@ export default function CultivatorNavbar() {
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId);
-    window.dispatchEvent(new CustomEvent("cultivator-tab-changed", { detail: tabId }));
+    if (!window.location.pathname.startsWith("/portal/cultivator")) {
+      navigate(`/portal/cultivator?tab=${tabId}`);
+    } else {
+      window.dispatchEvent(new CustomEvent("cultivator-tab-changed", { detail: tabId }));
+    }
   };
 
   const handleSignOut = () => {

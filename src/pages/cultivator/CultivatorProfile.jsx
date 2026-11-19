@@ -46,7 +46,7 @@ export default function CultivatorProfile({ onToast }) {
                 />
               </div>
 
-              <div style={{ flex: 1, minWidth: 260 }}>
+              <div style={{ flex: 1, minWidth: 200 }}>
                 <span className="role-badge-pill" style={{ marginBottom: 6 }}>
                   Verified Commercial Cultivator · FSSAI Registered
                 </span>

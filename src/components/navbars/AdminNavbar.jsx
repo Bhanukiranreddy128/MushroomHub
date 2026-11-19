@@ -94,6 +94,16 @@ export default function AdminNavbar() {
 
               <li>
                 <NavLink
+                  to="/portal/admin?tab=farmers"
+                  className={() => `pill-item ${window.location.search.includes("farmers") || window.location.search.includes("verification") ? "active" : ""}`}
+                >
+                  <span>🌾</span>
+                  <span>Farmer Verification</span>
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
                   to="/marketplace"
                   className={({ isActive }) => `pill-item ${isActive ? "active" : ""}`}
                 >
@@ -194,6 +204,28 @@ export default function AdminNavbar() {
                     >
                       <span>👥</span>
                       <span>Cultivator Directory</span>
+                    </Link>
+
+                    <Link
+                      to="/portal/admin?tab=farmers"
+                      onClick={() => setProfileMenuOpen(false)}
+                      style={{
+                        width: "100%",
+                        padding: "10px 14px",
+                        textDecoration: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                        fontSize: 12.5,
+                        fontWeight: 600,
+                        color: "#0f172a",
+                        borderRadius: "8px"
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
+                      onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
+                    >
+                      <span>🌾</span>
+                      <span>Farmer Verification</span>
                     </Link>
 
                     <Link

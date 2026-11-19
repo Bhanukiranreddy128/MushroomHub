@@ -14,7 +14,7 @@ export default function About() {
       </section>
 
       <div className="container" style={{ padding: "60px 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: 50, alignItems: "center", marginBottom: 70 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))", gap: "clamp(24px, 4vw, 50px)", alignItems: "center", marginBottom: 70 }}>
           <div>
             <p className="eyebrow">Rooted In Community</p>
             <h2 style={{ font: "700 36px var(--serif)", color: "var(--ink)", lineHeight: 1.25, margin: "0 0 18px" }}>

@@ -12,7 +12,7 @@ export default function Login() {
   const { loginWithCredentials, user } = useAuth();
 
   const getDestination = (defaultPath) => {
-    if (redirectParam && redirectParam.startsWith("/")) {
+    if (redirectParam && redirectParam.startsWith("/") && redirectParam !== "/" && redirectParam !== "/login") {
       return redirectParam;
     }
     return defaultPath;

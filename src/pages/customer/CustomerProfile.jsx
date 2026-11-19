@@ -217,7 +217,7 @@ export default function CustomerProfile({ onToast }) {
                 )}
               </div>
 
-              <div style={{ flex: 1, minWidth: 260 }}>
+              <div style={{ flex: 1, minWidth: 200 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                   <span className="role-badge-pill" style={{ background: "#e8eff7", color: "#1c4a79", margin: 0 }}>
                     Verified MushroomHub Consumer · Direct Farm Buyer

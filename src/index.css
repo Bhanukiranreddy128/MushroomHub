@@ -67,7 +67,9 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
+  max-width: 100vw;
   min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -1087,5 +1089,29 @@ h1, h2, h3, h4, h5, h6 {
   }
   .hero-buttons .button {
     width: 100%;
+  }
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* Global Mobile Viewport Safety & Containment */
+img, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }

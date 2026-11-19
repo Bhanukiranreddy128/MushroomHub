@@ -65,7 +65,7 @@ export default function Resources() {
       </section>
 
       <div className="container" style={{ padding: "60px 0 90px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 26 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))", gap: 26 }}>
           {guides.map((g) => (
             <article
               key={g.title}

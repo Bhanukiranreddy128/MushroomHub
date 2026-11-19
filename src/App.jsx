@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import CustomerAuthModal from "./components/CustomerAuthModal";
 import Header from "./components/Header";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -125,7 +125,7 @@ export default function App() {
           <Route
             path="/portal/cultivator"
             element={
-              <ProtectedRoute allowedRoles={["cultivater", "superadmin"]}>
+              <ProtectedRoute allowedRoles={["cultivater", "cultivator", "superadmin"]}>
                 <CultivatorPortal />
               </ProtectedRoute>
             }
@@ -154,6 +154,14 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* Quick Route Aliases */}
+          <Route path="/admin" element={<Navigate to="/portal/admin" replace />} />
+          <Route path="/cultivator" element={<Navigate to="/portal/cultivator" replace />} />
+          <Route path="/cultivater" element={<Navigate to="/portal/cultivator" replace />} />
+          <Route path="/farmer" element={<Navigate to="/portal/cultivator" replace />} />
+          <Route path="/customer" element={<Navigate to="/portal/customer" replace />} />
+          <Route path="/superadmin" element={<Navigate to="/portal/superadmin" replace />} />
 
           {/* Fallback */}
           <Route path="*" element={<Home />} />

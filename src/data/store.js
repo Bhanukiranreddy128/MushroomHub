@@ -309,6 +309,8 @@ export function registerUser(userData) {
     farmName: userData.farmName || `${userData.name}'s Farm`,
     phone: userData.phone || "",
     location: userData.location || "India",
+    accountStatus: "ACTIVE",
+    verificationStatus: userData.role === "cultivater" ? "PENDING" : "APPROVED",
     createdAt: new Date().toISOString()
   };
 
@@ -320,13 +322,23 @@ export function registerUser(userData) {
     const currentProfile = getCultivatorProfile();
     const newProfile = {
       ...currentProfile,
+      id: newUser.id,
       farmName: userData.farmName || currentProfile.farmName,
       growerName: userData.name,
       email: userData.email,
       phone: userData.phone || currentProfile.phone,
-      location: userData.location || currentProfile.location
+      location: userData.location || currentProfile.location,
+      verificationStatus: "PENDING"
     };
     saveCultivatorProfile(newProfile);
+
+    // Also add to all cultivators profiles directory so Admin can inspect and verify
+    const existingProfiles = getAllCultivatorProfiles();
+    if (!existingProfiles.some((p) => (p.email || "").toLowerCase() === userData.email.toLowerCase())) {
+      const updatedProfiles = [...existingProfiles, newProfile];
+      localStorage.setItem(STORAGE_KEYS.PROFILES_LIST, JSON.stringify(updatedProfiles));
+      dispatchStoreEvent("all-cultivators-updated", updatedProfiles);
+    }
   }
 
   // If registering as a customer, initialize their customer profile with their registered credentials
@@ -403,6 +415,26 @@ export function authenticateUser(role, email, password) {
     }
 
     return { success: false, error: "Incorrect password. Please verify your credentials or enter 'password123'." };
+  }
+
+  // 4. Verification Check for Cultivators (Farmers)
+  if (targetRole === "cultivater") {
+    const vStatus = (user.verificationStatus || "APPROVED").toUpperCase();
+    if (vStatus === "PENDING") {
+      return {
+        success: false,
+        pendingApproval: true,
+        verificationStatus: "PENDING",
+        error: "Account Pending Admin Approval: Your Cultivator account is awaiting review and approval by the Administrator. You will be able to log in once the admin verifies and accepts your organic farm credentials."
+      };
+    } else if (vStatus === "REJECTED") {
+      const reason = user.rejectionReason || "Grower profile could not be verified by platform administrators.";
+      return {
+        success: false,
+        verificationStatus: "REJECTED",
+        error: `Account Application Rejected: ${reason} Please contact MushroomHub Administration at support@mushroomhub.com if you believe this is an error.`
+      };
+    }
   }
 
   return { success: true, user };
@@ -618,6 +650,53 @@ export function updateCultivatorProfileByAdmin(id, updates) {
   }
 
   return updatedAll;
+}
+
+export function updateUserVerificationInStore(farmerId, email, status, rejectionReason = "") {
+  const normEmail = (email || "").trim().toLowerCase();
+  const rawId = typeof farmerId === "string" && farmerId.includes("-") ? Number(farmerId.split("-").pop()) : Number(farmerId);
+
+  // 1. Update in Registered Users Store
+  const users = getRegisteredUsers();
+  const updatedUsers = users.map((u) => {
+    const uRawId = typeof u.id === "string" && u.id.includes("-") ? Number(u.id.split("-").pop()) : Number(u.id);
+    const match =
+      (normEmail && (u.email || "").trim().toLowerCase() === normEmail) ||
+      (farmerId && u.id === farmerId) ||
+      (!isNaN(rawId) && rawId > 0 && uRawId === rawId);
+    if (match) {
+      return {
+        ...u,
+        verificationStatus: status,
+        rejectionReason: status === "REJECTED" ? (rejectionReason || "Verification rejected by administrator.") : null
+      };
+    }
+    return u;
+  });
+  localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(updatedUsers));
+  dispatchStoreEvent("users-updated", updatedUsers);
+
+  // 2. Update in Cultivator Profiles Directory
+  const profiles = getAllCultivatorProfiles();
+  const updatedProfiles = profiles.map((p) => {
+    const pRawId = typeof p.id === "string" && p.id.includes("-") ? Number(p.id.split("-").pop()) : Number(p.id);
+    const match =
+      (normEmail && (p.email || "").trim().toLowerCase() === normEmail) ||
+      (farmerId && p.id === farmerId) ||
+      (!isNaN(rawId) && rawId > 0 && pRawId === rawId);
+    if (match) {
+      return {
+        ...p,
+        verificationStatus: status,
+        rejectionReason: status === "REJECTED" ? (rejectionReason || "Verification rejected by administrator.") : null
+      };
+    }
+    return p;
+  });
+  localStorage.setItem(STORAGE_KEYS.PROFILES_LIST, JSON.stringify(updatedProfiles));
+  dispatchStoreEvent("all-cultivators-updated", updatedProfiles);
+
+  return updatedUsers;
 }
 
 // 1c. Super Admin Version Control (Me & You Management)

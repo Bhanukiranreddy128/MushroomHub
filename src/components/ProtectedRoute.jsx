@@ -15,8 +15,12 @@ export default function ProtectedRoute({ allowedRoles, children }) {
   }
 
   // 2. Role verification
-  const currentRole = (user.role || "").toLowerCase();
-  const normalizedAllowed = (allowedRoles || []).map((r) => r.toLowerCase());
+  const normRole = (r) => {
+    const low = (r || "").toLowerCase();
+    return low === "cultivator" ? "cultivater" : low;
+  };
+  const currentRole = normRole(user.role);
+  const normalizedAllowed = (allowedRoles || []).map(normRole);
 
   const hasPermission = normalizedAllowed.includes(currentRole);
 

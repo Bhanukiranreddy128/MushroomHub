@@ -164,9 +164,22 @@ public class AdminController {
         return ResponseEntity.ok(farmers);
     }
 
-    @PostMapping("/farmers/{id}/verify")
-    public ResponseEntity<?> verifyFarmer(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        Optional<User> userOpt = userRepository.findById(id);
+    @PostMapping({"/farmers/{id}/verify", "/farmers/verify"})
+    public ResponseEntity<?> verifyFarmer(@PathVariable(required = false) Long id, @RequestBody Map<String, String> body) {
+        Optional<User> userOpt = Optional.empty();
+        if (id != null && id > 0) {
+            userOpt = userRepository.findById(id);
+        }
+        if (userOpt.isEmpty() && body.get("email") != null && !body.get("email").trim().isEmpty()) {
+            userOpt = userRepository.findByEmailIgnoreCase(body.get("email").trim());
+        }
+        if (userOpt.isEmpty() && body.get("id") != null) {
+            try {
+                Long parsedId = Long.parseLong(body.get("id").trim());
+                userOpt = userRepository.findById(parsedId);
+            } catch (Exception ignored) {}
+        }
+
         if (userOpt.isEmpty() || (!"cultivater".equalsIgnoreCase(userOpt.get().getRole()) && !"cultivator".equalsIgnoreCase(userOpt.get().getRole()) && !"farmer".equalsIgnoreCase(userOpt.get().getRole()))) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("success", false, "error", "Farmer account not found"));
         }
@@ -190,7 +203,7 @@ public class AdminController {
 
         User saved = userRepository.save(farmer);
 
-        logActivity("VERIFY_FARMER", "FARMER", String.valueOf(id),
+        logActivity("VERIFY_FARMER", "FARMER", String.valueOf(saved.getId()),
                 "Updated verification status for " + saved.getFarmName() + " (" + saved.getEmail() + ") to " + saved.getVerificationStatus());
 
         return ResponseEntity.ok(Map.of(

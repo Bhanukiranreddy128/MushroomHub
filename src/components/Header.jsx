@@ -56,7 +56,7 @@ export default function Header() {
     if (user.role === "superadmin") {
       return <SuperAdminNavbar />;
     }
-    if (user.role === "cultivater") {
+    if (user.role === "cultivater" || user.role === "cultivator") {
       return <CultivatorNavbar />;
     }
   }

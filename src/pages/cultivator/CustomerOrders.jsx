@@ -367,7 +367,7 @@ export default function CustomerOrders({ onToast }) {
           </div>
 
           {/* Search Box */}
-          <div style={{ position: "relative", minWidth: 260 }}>
+          <div style={{ position: "relative", minWidth: 200, flex: 1, maxWidth: 360 }}>
             <input
               type="text"
               className="form-control"
@@ -704,7 +704,7 @@ export default function CustomerOrders({ onToast }) {
             </div>
 
             <div className="slip-box" style={{ margin: "14px 0" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, flexWrap: "wrap", gap: 8 }}>
                 <span><strong>Logistics Courier:</strong> {activeSlipOrder.deliveryPartner}</span>
                 <span><strong>AWB Tracking:</strong> {activeSlipOrder.trackingNumber}</span>
                 <span><strong>Status:</strong> {activeSlipOrder.deliveryStatus}</span>
@@ -712,37 +712,39 @@ export default function CustomerOrders({ onToast }) {
             </div>
 
             {/* Itemized Table */}
-            <table className="slip-table">
-              <thead>
-                <tr>
-                  <th>Mushroom Variety</th>
-                  <th>Quantity</th>
-                  <th>Rate (₹)</th>
-                  <th>Total (₹)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {activeSlipOrder.items && activeSlipOrder.items.length > 0 ? (
-                  activeSlipOrder.items.map((it, i) => (
-                    <tr key={i}>
-                      <td><strong>{it.name}</strong></td>
-                      <td>{it.quantity} {it.unit || "kg"}</td>
-                      <td>₹{it.unitPrice || it.price}</td>
-                      <td>₹{(it.total || it.price * it.quantity).toLocaleString("en-IN")}</td>
-                    </tr>
-                  ))
-                ) : (
+            <div className="table-responsive" style={{ overflowX: "auto", maxWidth: "100%" }}>
+              <table className="slip-table">
+                <thead>
                   <tr>
-                    <td><strong>{activeSlipOrder.variety}</strong></td>
-                    <td>{activeSlipOrder.quantity} {activeSlipOrder.unit || "kg"}</td>
-                    <td>₹{activeSlipOrder.unitPrice}</td>
-                    <td>₹{Number(activeSlipOrder.total).toLocaleString("en-IN")}</td>
+                    <th>Mushroom Variety</th>
+                    <th>Quantity</th>
+                    <th>Rate (₹)</th>
+                    <th>Total (₹)</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {activeSlipOrder.items && activeSlipOrder.items.length > 0 ? (
+                    activeSlipOrder.items.map((it, i) => (
+                      <tr key={i}>
+                        <td><strong>{it.name}</strong></td>
+                        <td>{it.quantity} {it.unit || "kg"}</td>
+                        <td>₹{it.unitPrice || it.price}</td>
+                        <td>₹{(it.total || it.price * it.quantity).toLocaleString("en-IN")}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td><strong>{activeSlipOrder.variety}</strong></td>
+                      <td>{activeSlipOrder.quantity} {activeSlipOrder.unit || "kg"}</td>
+                      <td>₹{activeSlipOrder.unitPrice}</td>
+                      <td>₹{Number(activeSlipOrder.total).toLocaleString("en-IN")}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 16, flexWrap: "wrap", gap: 10 }}>
               <div style={{ fontSize: 11, color: "#5d6d5c" }}>
                 ❄️ Cold-chain temperature: 2-4°C. Handle fresh harvest with extreme care.
               </div>

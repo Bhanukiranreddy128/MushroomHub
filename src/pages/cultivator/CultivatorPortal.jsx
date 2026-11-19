@@ -308,6 +308,20 @@ export default function CultivatorPortal() {
 
   return (
     <div className="cultivator-layout">
+      {/* Mobile Backdrop Overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="sidebar-mobile-backdrop"
+          onClick={() => setMobileMenuOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.45)",
+            zIndex: 9999
+          }}
+        />
+      )}
+
       {/* LEFT SIDEBAR NAVIGATION */}
       <aside className={`cultivator-sidebar ${mobileMenuOpen ? "open" : ""}`}>
         {/* Farm & Grower Identity (Reflects Cultivator Profile Live) */}

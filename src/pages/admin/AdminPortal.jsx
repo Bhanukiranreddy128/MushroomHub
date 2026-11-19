@@ -6,7 +6,8 @@ import {
   getAllCultivatorProfiles,
   getCustomerOrders,
   getMushroomFeed,
-  getRegisteredUsers
+  getRegisteredUsers,
+  updateUserVerificationInStore
 } from "../../data/store";
 import {
   deleteAdminProduct,
@@ -33,13 +34,15 @@ export default function AdminPortal() {
 
   // Active module tab
   const [searchParams, setSearchParams] = useSearchParams();
-  const VALID_ADMIN_TABS = ["users", "farmers", "products", "orders", "payments", "deliveries", "complaints", "analytics"];
+  const VALID_ADMIN_TABS = ["users", "farmers", "verification", "products", "orders", "payments", "deliveries", "complaints", "analytics"];
   const urlTab = searchParams.get("tab");
-  const activeTab = urlTab && VALID_ADMIN_TABS.includes(urlTab) ? urlTab : "users";
+  const normalizedUrlTab = urlTab === "verification" ? "farmers" : urlTab;
+  const activeTab = normalizedUrlTab && VALID_ADMIN_TABS.includes(normalizedUrlTab) ? normalizedUrlTab : "users";
 
   const setActiveTab = (newTab) => {
-    if (newTab === activeTab) return;
-    setSearchParams({ tab: newTab });
+    const target = newTab === "verification" ? "farmers" : newTab;
+    if (target === activeTab) return;
+    setSearchParams({ tab: target });
   };
 
   // Notifications
@@ -73,7 +76,7 @@ export default function AdminPortal() {
 
   // Modals & Active Selections
   const [selectedUser, setSelectedUser] = useState(null);
-  const [rejectionModal, setRejectionModal] = useState({ open: false, farmerId: null, reason: "" });
+  const [rejectionModal, setRejectionModal] = useState({ open: false, farmerId: null, farmerEmail: "", reason: "" });
   const [inspectFarmerModal, setInspectFarmerModal] = useState({ open: false, farmer: null });
   const [farmerFilter, setFarmerFilter] = useState("ALL");
   const [complaintModal, setComplaintModal] = useState({ open: false, complaint: null, response: "", status: "RESOLVED" });
@@ -109,10 +112,22 @@ export default function AdminPortal() {
 
         // 2. Farmers
         const farmersRes = await fetchAdminFarmers();
-        if (isMounted && farmersRes.ok && Array.isArray(farmersRes.data)) {
+        if (isMounted && farmersRes.ok && Array.isArray(farmersRes.data) && farmersRes.data.length > 0) {
           setFarmersList(farmersRes.data);
         } else if (isMounted) {
-          setFarmersList(getAllCultivatorProfiles());
+          const registered = getRegisteredUsers().filter(
+            (u) => u.role === "cultivater" || u.role === "cultivator"
+          );
+          const cloudData = (farmersRes && Array.isArray(farmersRes.data)) ? farmersRes.data : [];
+          const merged = [...cloudData];
+          const seenEmails = new Set(merged.map((m) => (m.email || "").toLowerCase()));
+          registered.forEach((lf) => {
+            if (!seenEmails.has((lf.email || "").toLowerCase())) {
+              merged.push(lf);
+              seenEmails.add((lf.email || "").toLowerCase());
+            }
+          });
+          setFarmersList(merged.length > 0 ? merged : getAllCultivatorProfiles());
         }
 
         // 3. Products
@@ -191,37 +206,33 @@ export default function AdminPortal() {
   };
 
   // Handlers for Module 2: Farmer Verification
-  const handleFarmerVerification = async (farmerId, status, rejectionReason = "") => {
+  const handleFarmerVerification = async (farmerId, status, rejectionReason = "", farmerEmail = "") => {
     const rawId = typeof farmerId === "string" && farmerId.includes("-") ? Number(farmerId.split("-").pop()) : Number(farmerId);
-    const res = await verifyAdminFarmer(rawId, status, rejectionReason);
-    if (res.ok) {
-      setFarmersList((prev) =>
-        prev.map((f) => {
-          const fid = typeof f.id === "string" && f.id.includes("-") ? Number(f.id.split("-").pop()) : Number(f.id);
-          return fid === rawId || f.id === farmerId
-            ? { ...f, verificationStatus: status, rejectionReason: rejectionReason || null }
-            : f;
-        })
-      );
-      if (status === "APPROVED") {
-        showToast(`✓ Cultivator accepted & approved! Their credentials are now active for login.`);
-      } else if (status === "REJECTED") {
-        showToast(`Farmer verification status marked as REJECTED.`);
-      } else {
-        showToast(`Farmer verification status set to ${status}`);
-      }
+    const validId = !isNaN(rawId) && rawId > 0 ? rawId : 0;
+    const res = await verifyAdminFarmer(validId, status, rejectionReason, farmerEmail);
+
+    setFarmersList((prev) =>
+      prev.map((f) => {
+        const fid = typeof f.id === "string" && f.id.includes("-") ? Number(f.id.split("-").pop()) : Number(f.id);
+        const match = (validId && fid === validId) || f.id === farmerId || (farmerEmail && f.email === farmerEmail);
+        return match
+          ? { ...f, verificationStatus: status, rejectionReason: rejectionReason || null }
+          : f;
+      })
+    );
+
+    // Persist in local storage so offline & reloads preserve verification
+    updateUserVerificationInStore(farmerId, farmerEmail, status, rejectionReason);
+
+    if (status === "APPROVED") {
+      showToast(`✓ Cultivator accepted & approved! Their credentials are now active for login.`);
+    } else if (status === "REJECTED") {
+      showToast(`Farmer verification status marked as REJECTED.`);
     } else {
-      setFarmersList((prev) =>
-        prev.map((f) => {
-          const fid = typeof f.id === "string" && f.id.includes("-") ? Number(f.id.split("-").pop()) : Number(f.id);
-          return fid === rawId || f.id === farmerId
-            ? { ...f, verificationStatus: status, rejectionReason: rejectionReason || null }
-            : f;
-        })
-      );
-      showToast(`Farmer verification updated to ${status}.`);
+      showToast(`Farmer verification status set to ${status}`);
     }
-    setRejectionModal({ open: false, farmerId: null, reason: "" });
+
+    setRejectionModal({ open: false, farmerId: null, farmerEmail: "", reason: "" });
     setInspectFarmerModal((prev) =>
       prev.open && prev.farmer
         ? { ...prev, farmer: { ...prev.farmer, verificationStatus: status, rejectionReason: rejectionReason || null } }
@@ -485,9 +496,9 @@ export default function AdminPortal() {
 
           <button
             type="button"
-            className={`btn btn-sm ${activeTab === "verification" ? "btn-success" : "btn-light"}`}
+            className={`btn btn-sm ${activeTab === "farmers" || activeTab === "verification" ? "btn-success" : "btn-light"}`}
             style={{ borderRadius: 8, fontWeight: 600, padding: "8px 14px" }}
-            onClick={() => setActiveTab("verification")}
+            onClick={() => setActiveTab("farmers")}
           >
             🌾 2. Farmer Verification ({farmersList.length})
           </button>
@@ -712,7 +723,7 @@ export default function AdminPortal() {
         {/* =========================================================================
             MODULE 2: FARMER VERIFICATION
             ========================================================================= */}
-        {activeTab === "verification" && (
+        {(activeTab === "farmers" || activeTab === "verification") && (
           <div className="hub-card" style={{ padding: "24px", background: "#fff", borderRadius: 12 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, flexWrap: "wrap", gap: 12 }}>
               <div>
@@ -725,35 +736,37 @@ export default function AdminPortal() {
               </div>
 
               {/* Status Filters */}
-              <div className="btn-group btn-group-sm" role="group">
-                <button
-                  type="button"
-                  className={`btn ${farmerFilter === "ALL" ? "btn-dark" : "btn-outline-secondary"}`}
-                  onClick={() => setFarmerFilter("ALL")}
-                >
-                  All ({farmersList.length})
-                </button>
-                <button
-                  type="button"
-                  className={`btn ${farmerFilter === "PENDING" ? "btn-warning text-dark font-weight-bold" : "btn-outline-warning text-dark"}`}
-                  onClick={() => setFarmerFilter("PENDING")}
-                >
-                  ⏳ Pending Review ({farmersList.filter(f => (f.verificationStatus || "PENDING").toUpperCase() === "PENDING").length})
-                </button>
-                <button
-                  type="button"
-                  className={`btn ${farmerFilter === "APPROVED" ? "btn-success" : "btn-outline-success"}`}
-                  onClick={() => setFarmerFilter("APPROVED")}
-                >
-                  ✓ Approved ({farmersList.filter(f => (f.verificationStatus || "PENDING").toUpperCase() === "APPROVED" || (f.verificationStatus || "").toUpperCase() === "VERIFIED & APPROVED").length})
-                </button>
-                <button
-                  type="button"
-                  className={`btn ${farmerFilter === "REJECTED" ? "btn-danger" : "btn-outline-danger"}`}
-                  onClick={() => setFarmerFilter("REJECTED")}
-                >
-                  ✗ Rejected ({farmersList.filter(f => (f.verificationStatus || "").toUpperCase() === "REJECTED").length})
-                </button>
+              <div style={{ overflowX: "auto", maxWidth: "100%", WebkitOverflowScrolling: "touch" }}>
+                <div className="btn-group btn-group-sm" role="group" style={{ flexWrap: "wrap", gap: 2 }}>
+                  <button
+                    type="button"
+                    className={`btn ${farmerFilter === "ALL" ? "btn-dark" : "btn-outline-secondary"}`}
+                    onClick={() => setFarmerFilter("ALL")}
+                  >
+                    All ({farmersList.length})
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${farmerFilter === "PENDING" ? "btn-warning text-dark font-weight-bold" : "btn-outline-warning text-dark"}`}
+                    onClick={() => setFarmerFilter("PENDING")}
+                  >
+                    ⏳ Pending Review ({farmersList.filter(f => (f.verificationStatus || "PENDING").toUpperCase() === "PENDING").length})
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${farmerFilter === "APPROVED" ? "btn-success" : "btn-outline-success"}`}
+                    onClick={() => setFarmerFilter("APPROVED")}
+                  >
+                    ✓ Approved ({farmersList.filter(f => (f.verificationStatus || "PENDING").toUpperCase() === "APPROVED" || (f.verificationStatus || "").toUpperCase() === "VERIFIED & APPROVED").length})
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${farmerFilter === "REJECTED" ? "btn-danger" : "btn-outline-danger"}`}
+                    onClick={() => setFarmerFilter("REJECTED")}
+                  >
+                    ✗ Rejected ({farmersList.filter(f => (f.verificationStatus || "").toUpperCase() === "REJECTED").length})
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -888,7 +901,7 @@ export default function AdminPortal() {
                                 <button
                                   type="button"
                                   className="btn btn-success btn-sm"
-                                  onClick={() => handleFarmerVerification(targetId, "APPROVED")}
+                                  onClick={() => handleFarmerVerification(targetId, "APPROVED", "", f.email)}
                                   disabled={vStatus === "APPROVED" || vStatus === "VERIFIED & APPROVED"}
                                   title="Accept cultivator and activate login credentials"
                                 >
@@ -897,7 +910,7 @@ export default function AdminPortal() {
                                 <button
                                   type="button"
                                   className="btn btn-outline-danger btn-sm"
-                                  onClick={() => setRejectionModal({ open: true, farmerId: targetId, reason: "" })}
+                                  onClick={() => setRejectionModal({ open: true, farmerId: targetId, farmerEmail: f.email, reason: "" })}
                                   title="Reject cultivator application"
                                 >
                                   Reject ✗
@@ -1534,14 +1547,14 @@ export default function AdminPortal() {
                 <button
                   type="button"
                   className="btn btn-secondary btn-sm"
-                  onClick={() => setRejectionModal({ open: false, farmerId: null, reason: "" })}
+                  onClick={() => setRejectionModal({ open: false, farmerId: null, farmerEmail: "", reason: "" })}
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
                   className="btn btn-danger btn-sm"
-                  onClick={() => handleFarmerVerification(rejectionModal.farmerId, "REJECTED", rejectionModal.reason)}
+                  onClick={() => handleFarmerVerification(rejectionModal.farmerId, "REJECTED", rejectionModal.reason, rejectionModal.farmerEmail)}
                 >
                   Confirm Rejection
                 </button>
@@ -1609,7 +1622,7 @@ export default function AdminPortal() {
                   </div>
 
                   <div className="col-12">
-                    <div style={{ background: "#f8fafc", padding: 14, borderRadius: 10, border: "1px solid #e2e8f0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ background: "#f8fafc", padding: 14, borderRadius: 10, border: "1px solid #e2e8f0", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
                       <div>
                         <div style={{ fontSize: 11, textTransform: "uppercase", color: "#64748b", fontWeight: 700 }}>Current Platform Status</div>
                         <div style={{ marginTop: 4 }}>
@@ -1634,7 +1647,7 @@ export default function AdminPortal() {
                         )}
                       </div>
 
-                      <div style={{ fontSize: 12, color: "#64748b", textAlign: "right" }}>
+                      <div style={{ fontSize: 12, color: "#64748b", textAlign: "left" }}>
                         <div><strong>Account ID:</strong> #{inspectFarmerModal.farmer.id || inspectFarmerModal.farmer.userId}</div>
                         <div><strong>Auth Mode:</strong> {inspectFarmerModal.farmer.authProvider || "cloud"}</div>
                       </div>
@@ -1659,7 +1672,7 @@ export default function AdminPortal() {
                     onClick={() => {
                       const rawId = inspectFarmerModal.farmer.id || inspectFarmerModal.farmer.userId;
                       const targetId = typeof rawId === "string" && rawId.includes("-") ? Number(rawId.split("-").pop()) : rawId;
-                      handleFarmerVerification(targetId, "APPROVED");
+                      handleFarmerVerification(targetId, "APPROVED", "", inspectFarmerModal.farmer.email);
                     }}
                   >
                     Accept & Approve Cultivator ✓
@@ -1671,7 +1684,7 @@ export default function AdminPortal() {
                     onClick={() => {
                       const rawId = inspectFarmerModal.farmer.id || inspectFarmerModal.farmer.userId;
                       const targetId = typeof rawId === "string" && rawId.includes("-") ? Number(rawId.split("-").pop()) : rawId;
-                      handleFarmerVerification(targetId, "PENDING");
+                      handleFarmerVerification(targetId, "PENDING", "", inspectFarmerModal.farmer.email);
                     }}
                   >
                     Move back to Pending ⏳
@@ -1684,7 +1697,7 @@ export default function AdminPortal() {
                   onClick={() => {
                     const rawId = inspectFarmerModal.farmer.id || inspectFarmerModal.farmer.userId;
                     const targetId = typeof rawId === "string" && rawId.includes("-") ? Number(rawId.split("-").pop()) : rawId;
-                    setRejectionModal({ open: true, farmerId: targetId, reason: "" });
+                    setRejectionModal({ open: true, farmerId: targetId, farmerEmail: inspectFarmerModal.farmer.email, reason: "" });
                   }}
                 >
                   Reject Application ✗
