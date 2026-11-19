@@ -31,6 +31,7 @@ export default function Login() {
   const [step, setStep] = useState(urlRole ? "login" : "select");
 
   const getInitialEmail = (role) => {
+    if (role === "cultivater" || role === "customer") return "";
     const registered = getRegisteredUsers().find((u) => u.role === role);
     if (registered) return registered.email;
     const roleObj = SYSTEM_ROLES.find((r) => r.id === role);
@@ -460,9 +461,6 @@ export default function Login() {
                     onChange={(e) => setLoginPassword(e.target.value)}
                     required
                   />
-                  <div style={{ marginTop: 6, fontSize: 11, color: "#6a7b68" }}>
-                    💡 Demo account password: <strong style={{ color: "#23572d" }}>password123</strong> (or your custom password)
-                  </div>
                 </div>
 
                 <button

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import { addToCart } from "../data";
 import { DEFAULT_MUSHROOM_PHOTO, getMushroomFeed } from "../data/store";
 import "./MorningFlushSlider.css";
@@ -18,7 +19,11 @@ import "./MorningFlushSlider.css";
  * - Add to Basket & Details CTA buttons
  * - Pagination indicator dots & slide story helper
  */
-export default function MorningFlushSlider({ items: propItems, onToast, className = "" }) {
+export default function MorningFlushSlider({ items: propItems, onToast, className = "", showCart }) {
+  const { user } = useAuth();
+  const isCultivator = user?.role === "cultivater" || user?.role === "cultivator";
+  const shouldShowCart = showCart !== undefined ? showCart : !isCultivator;
+
   const [storeCatalog, setStoreCatalog] = useState(getMushroomFeed);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -270,17 +275,23 @@ export default function MorningFlushSlider({ items: propItems, onToast, classNam
 
                   {/* Card Primary Actions Row */}
                   <div className="spotlight-actions-row">
-                    <button
-                      type="button"
-                      className={`spotlight-add-btn ${isAdded ? "added" : ""}`}
-                      onClick={(e) => handleAddToCart(item, e)}
+                    {shouldShowCart && (
+                      <button
+                        type="button"
+                        className={`spotlight-add-btn ${isAdded ? "added" : ""}`}
+                        onClick={(e) => handleAddToCart(item, e)}
+                      >
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                        </svg>
+                        <span>{isAdded ? "Added to Basket!" : `Add to Basket (₹${price})`}</span>
+                      </button>
+                    )}
+                    <Link
+                      to={`/mushrooms/${item.id}`}
+                      className="spotlight-details-link"
+                      style={!shouldShowCart ? { flex: 1, justifyContent: "center" } : undefined}
                     >
-                      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-                      </svg>
-                      <span>{isAdded ? "Added to Basket!" : `Add to Basket (₹${price})`}</span>
-                    </button>
-                    <Link to={`/mushrooms/${item.id}`} className="spotlight-details-link">
                       <span>Details</span>
                       <span>→</span>
                     </Link>

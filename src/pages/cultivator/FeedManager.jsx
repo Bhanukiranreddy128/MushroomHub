@@ -333,7 +333,7 @@ export default function FeedManager({ onToast, autoOpenAddModal, onModalOpened }
 
     setIsSubmitting(true);
     try {
-      const cultivatorEmail = (user?.email || "cultivator@mushroomhub.com").toLowerCase().trim();
+      const cultivatorEmail = (user?.email || "").toLowerCase().trim();
       const farmName = user?.farmName || "Himalayan Forest Spores Farm";
       const cultivatorId = user?.id || (cultivatorEmail ? `user-${cultivatorEmail}` : "user-cultivator-01");
 
@@ -510,7 +510,7 @@ export default function FeedManager({ onToast, autoOpenAddModal, onModalOpened }
             </p>
           </div>
         </div>
-        <MorningFlushSlider items={feed} onToast={onToast} />
+        <MorningFlushSlider items={feed} onToast={onToast} showCart={false} />
       </div>
 
       {/* Feed Cards Grid or Empty State with Real-Time Pencil Edit Icons */}

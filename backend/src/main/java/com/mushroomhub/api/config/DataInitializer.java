@@ -18,14 +18,16 @@ public class DataInitializer {
                                    ComplaintRepository complaintRepository,
                                    AdminActivityLogRepository activityLogRepository) {
         return args -> {
-            // 1. Seed strictly the 4 allowed RBAC roles (BUYER, FARMER, ADMIN, SUPER_ADMIN)
+            // 1. Seed strictly authorized accounts (Cultivator owner, Admin, Super Admin)
             List<User> defaults = List.of(
                     new User("cultivater", "Bhanu Kiran Reddy", "bhanukiranreddy128@gmail.com", "password123", "Bhanu Kiran Reddy Mushroom Farm", "+91 98450 12890", "Dehradun, Uttarakhand", "cloud"),
-                    new User("cultivater", "Vikram R. Sharma", "cultivator@mushroomhub.com", "password123", "Himalayan Forest Spores & Myco Farm", "+91 98450 12890", "Dehradun, Uttarakhand", "cloud"),
-                    new User("customer", "Ananya Iyer", "customer@mushroomhub.com", "password123", "Gourmet Kitchens & Retail", "+91 97120 44589", "Bengaluru, Karnataka", "Flat 402, Green Glen Layout, Outer Ring Road", "Bengaluru", "Karnataka", "560103", "Prefers fresh Blue Oyster & Lion's Mane, morning delivery", "cloud"),
                     new User("admin", "Siddharth Sen", "admin@mushroomhub.com", "password123", "", "+91 98110 44321", "New Delhi, Operations Center", "cloud"),
                     new User("superadmin", "Chief Administrator", "superadmin@mushroomhub.com", "password123", "", "+91 98100 00001", "National HQ, Security Center", "cloud")
             );
+
+            // Remove legacy guest accounts if present
+            userRepository.findByEmailIgnoreCaseAndRole("cultivator@mushroomhub.com", "cultivater").ifPresent(userRepository::delete);
+            userRepository.findByEmailIgnoreCaseAndRole("customer@mushroomhub.com", "customer").ifPresent(userRepository::delete);
 
             for (User def : defaults) {
                 def.setAccountStatus("ACTIVE");

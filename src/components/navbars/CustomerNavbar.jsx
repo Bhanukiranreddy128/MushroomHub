@@ -226,7 +226,7 @@ export default function CustomerNavbar() {
                       {user?.name || "Bhanukiran"}
                     </div>
                     <div style={{ fontSize: 11, color: "#6e7f6e", marginTop: 2 }}>
-                      {user?.email || "customer@mushroomhub.com"}
+                      {user?.email || ""}
                     </div>
                     <span className="buyer-view-pill" style={{ marginTop: 8 }}>
                       VERIFIED BUYER ACCOUNT

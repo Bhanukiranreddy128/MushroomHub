@@ -230,7 +230,7 @@ export default function CustomerProfile({ onToast }) {
                   {profile.name || user?.name || "Customer"}
                 </h3>
                 <div style={{ fontSize: 13, color: "#4f6a54", display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center" }}>
-                  <span>📧 <strong>{profile.email || user?.email || "customer@mushroomhub.com"}</strong></span>
+                  <span>📧 <strong>{profile.email || user?.email || ""}</strong></span>
                   <span>📱 <strong>{profile.phone || user?.phone || "+91 97120 44589"}</strong></span>
                   <span>📍 <strong>{profile.city || user?.location || "Bengaluru"}, {profile.state || "Karnataka"}</strong></span>
                 </div>

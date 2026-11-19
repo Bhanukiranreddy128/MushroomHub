@@ -248,7 +248,7 @@ export default function CultivatorShowcase({ onToast, onOpenPostModal, onNavigat
 
         {/* Right Column: Interactive Showcase Card */}
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <MorningFlushSlider onToast={onToast} />
+          <MorningFlushSlider onToast={onToast} showCart={false} />
         </div>
       </div>
     </div>

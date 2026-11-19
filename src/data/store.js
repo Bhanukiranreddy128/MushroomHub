@@ -266,14 +266,20 @@ export function getRegisteredUsers() {
   const saved = localStorage.getItem(STORAGE_KEYS.USERS);
   if (saved) {
     try {
-      const parsed = JSON.parse(saved);
+      let parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // Ensure default users (including Bhanu's account) are always present even if browser already had cached users
+        // Remove guest accounts for cultivator and customer
+        const beforeLen = parsed.length;
+        parsed = parsed.filter(u => {
+          const email = (u.email || "").toLowerCase().trim();
+          return email !== "cultivator@mushroomhub.com" && email !== "customer@mushroomhub.com";
+        });
+        let changed = parsed.length !== beforeLen;
+
         const normRole = (r) => (r === "cultivator" ? "cultivater" : (r || "").toLowerCase());
         const existingKeys = new Set(
           parsed.map((u) => `${normRole(u.role)}_${(u.email || "").trim().toLowerCase()}`)
         );
-        let changed = false;
         DEFAULT_USERS.forEach((defUser) => {
           const key = `${normRole(defUser.role)}_${defUser.email.trim().toLowerCase()}`;
           if (!existingKeys.has(key)) {
@@ -414,7 +420,7 @@ export function authenticateUser(role, email, password) {
       return { success: true, user };
     }
 
-    return { success: false, error: "Incorrect password. Please verify your credentials or enter 'password123'." };
+    return { success: false, error: "Incorrect password. Please verify your credentials." };
   }
 
   // 4. Verification Check for Cultivators (Farmers)
@@ -526,18 +532,18 @@ export function saveCultivatorProfile(profile, user = null) {
 
 // 1b. Customer Profile Management
 export const DEFAULT_CUSTOMER_PROFILE = {
-  name: "Ananya Iyer",
-  email: "customer@mushroomhub.com",
-  phone: "+91 97120 44589",
-  businessName: "Gourmet Kitchens & Retail",
-  address: "Flat 402, Green Glen Layout, Outer Ring Road",
-  locality: "Bellandur",
-  city: "Bengaluru",
-  state: "Karnataka",
-  pincode: "560103",
-  preferences: "Fresh Organic Blue Oyster & Lion's Mane, weekend morning delivery",
+  name: "",
+  email: "",
+  phone: "",
+  businessName: "",
+  address: "",
+  locality: "",
+  city: "",
+  state: "",
+  pincode: "",
+  preferences: "",
   avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80",
-  createdAt: "2026-01-15"
+  createdAt: "2026"
 };
 
 export function getCustomerProfile(currentUser) {
@@ -878,7 +884,7 @@ export function addMushroomFeedItem(item, user = null) {
   const catalog = getMushroomFeed();
   const profile = getCultivatorProfile(user);
 
-  const userEmail = (item.farmerEmail || item.cultivatorEmail || user?.email || profile?.email || "cultivator@mushroomhub.com").toLowerCase().trim();
+  const userEmail = (item.farmerEmail || item.cultivatorEmail || user?.email || profile?.email || "").toLowerCase().trim();
   const userId = item.cultivatorId || user?.id || (userEmail ? `user-${userEmail}` : `user-${Date.now()}`);
   const farmName = item.farm || item.farmName || user?.farmName || profile?.farmName || "Himalayan Forest Spores Farm";
   const place = item.place || item.location || user?.location || profile?.location || "India";
@@ -1205,12 +1211,6 @@ export function getCustomerOrdersForCultivator(user) {
         return false;
       });
       if (match) return true;
-    }
-
-    // 4. Default / Simulated fallback: if user is default cultivator or default demo farm
-    if ((!oEmail || oEmail === "cultivator@mushroomhub.com") &&
-        (userEmail === "cultivator@mushroomhub.com" || !userEmail || farmName.includes("himalayan") || !farmName)) {
-      return true;
     }
 
     return false;
@@ -1569,9 +1569,6 @@ export function getBargainOffersForCustomer(user) {
     if (userId && offerUserId && (userId === offerUserId || offerUserId === `cust-${userEmail}`)) return true;
     if (userName && offerName && userName === offerName) return true;
 
-    // Fallback: If customer is logged in as default customer account, show default customer offers
-    if (user.role === "customer" && offerEmail === "customer@mushroomhub.com") return true;
-
     return false;
   });
 }
@@ -1617,12 +1614,6 @@ export function getBargainOffersForCultivator(user) {
 
     // 5. Product ID match with cultivator's catalog
     if (offer.productId && myProductIds.has(String(offer.productId))) return true;
-
-    // 6. Default fallback
-    if ((!cultEmail || cultEmail === "cultivator@mushroomhub.com" || cultId === "user-cultivator-01") &&
-        (userEmail === "cultivator@mushroomhub.com" || !userEmail || farmName.includes("himalayan") || !farmName)) {
-      return true;
-    }
 
     return false;
   });

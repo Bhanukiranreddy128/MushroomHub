@@ -20,7 +20,7 @@ import MushroomKnowledge from "./MushroomKnowledge";
 import SalesDashboard from "./SalesDashboard";
 
 export default function CultivatorPortal() {
-  const { user, logout, loginWithCredentials } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -158,7 +158,7 @@ export default function CultivatorPortal() {
   const handleSimulateIncomingOrder = () => {
     const profile = getCultivatorProfile(user);
     const farmName = user?.farmName || profile?.farmName || "Himalayan Forest Spores & Myco Farm";
-    const userEmail = (user?.email || profile?.email || "cultivator@mushroomhub.com").toLowerCase().trim();
+    const userEmail = (user?.email || profile?.email || "").toLowerCase().trim();
     const userId = user?.id || (userEmail ? `user-${userEmail}` : "user-cultivator-01");
     const farmLocation = user?.location || profile?.location || "Dehradun, Uttarakhand";
 
@@ -245,35 +245,29 @@ export default function CultivatorPortal() {
               </div>
               <div style={{ fontSize: 13, color: "#1f3829", display: "flex", alignItems: "center", gap: 8 }}>
                 <span>{user?.isLoggedIn ? "👤" : "🔒"}</span>
-                <span>Active as <strong>{user?.isLoggedIn ? user?.name : "Not Logged In (Guest)"}</strong></span>
+                <span>Active as <strong>{user?.isLoggedIn ? user?.name : "Not Logged In"}</strong></span>
                 {user?.role && (
                   <span className="role-badge-pill" style={{ background: "#e8eff7", color: "#1c4a79", fontSize: 10 }}>
                     {user?.role}
                   </span>
                 )}
               </div>
-              <div style={{ fontSize: 12, color: "#6e7f6e", marginTop: 8 }}>
-                Grower credentials: <strong>cultivator@mushroomhub.com</strong> / <strong>password123</strong>
-              </div>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <button
-                type="button"
-                className="button button-green"
-                style={{ width: "100%", justifyContent: "center", padding: "12px", fontSize: 14 }}
-                onClick={() => {
-                  loginWithCredentials("cultivater", "cultivator@mushroomhub.com", "password123");
-                }}
-              >
-                ⚡ Sign In with Cultivator Credentials (1-Click) →
-              </button>
               <Link
                 to="/login/cultivater"
+                className="button button-green"
+                style={{ width: "100%", justifyContent: "center", padding: "12px", fontSize: 14 }}
+              >
+                Log In to Cultivator Account →
+              </Link>
+              <Link
+                to="/signup?role=cultivater"
                 className="button button-outline"
                 style={{ width: "100%", justifyContent: "center", padding: "11px", fontSize: 13 }}
               >
-                Log In With Custom Account Credentials
+                Create New Cultivator Account
               </Link>
               <Link
                 to="/"
@@ -420,7 +414,7 @@ export default function CultivatorPortal() {
                 {cultivatorProfile.growerName || user?.name || "Cultivator"}
               </div>
               <div style={{ fontSize: 10, color: "#6e7f6e", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                {user?.email || "cultivator@mushroomhub.com"}
+                {user?.email || ""}
               </div>
             </div>
           </div>
