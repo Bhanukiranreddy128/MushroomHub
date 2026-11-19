@@ -1,7 +1,15 @@
 // Cloud Authentication & Role-Based API Service for MushroomHub
 // Connects to Spring Boot Cloud API (backed by Aiven PostgreSQL Cloud Database)
 
-const BACKEND_BASE = "http://localhost:8080/api";
+// Normalize base URL to ensure it points to the backend /api endpoint exactly once
+const resolveApiBaseUrl = () => {
+  const raw = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api").trim();
+  const trimmed = raw.replace(/\/+$/, "");
+  const withoutApi = trimmed.replace(/(\/api)+$/, "");
+  return `${withoutApi}/api`;
+};
+
+const BACKEND_BASE = resolveApiBaseUrl();
 const CLOUD_API_BASE = `${BACKEND_BASE}/auth`;
 const REQUEST_TIMEOUT_MS = 4500;
 

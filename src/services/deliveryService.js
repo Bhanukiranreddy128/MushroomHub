@@ -4,7 +4,15 @@
  * with resilient offline fallback to preserve fluid UX.
  */
 
-const API_BASE_URL = "http://localhost:8080/api";
+// Normalize base URL to ensure it points to the backend /api endpoint exactly once
+const resolveApiBaseUrl = () => {
+  const raw = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api").trim();
+  const trimmed = raw.replace(/\/+$/, "");
+  const withoutApi = trimmed.replace(/(\/api)+$/, "");
+  return `${withoutApi}/api`;
+};
+
+const API_BASE_URL = resolveApiBaseUrl();
 
 // Known farmer hubs for client fallback distance estimation
 const FARMER_HUBS = {

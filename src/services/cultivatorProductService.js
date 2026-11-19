@@ -3,7 +3,15 @@
 
 import { getAuthHeaders } from "./cloudAuth";
 
-const BACKEND_BASE = "http://localhost:8080/api";
+// Normalize base URL to ensure it points to the backend /api endpoint exactly once
+const resolveApiBaseUrl = () => {
+  const raw = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api").trim();
+  const trimmed = raw.replace(/\/+$/, "");
+  const withoutApi = trimmed.replace(/(\/api)+$/, "");
+  return `${withoutApi}/api`;
+};
+
+const BACKEND_BASE = resolveApiBaseUrl();
 const REQUEST_TIMEOUT_MS = 6000;
 
 async function fetchWithTimeout(url, options = {}, timeoutMs = REQUEST_TIMEOUT_MS) {
